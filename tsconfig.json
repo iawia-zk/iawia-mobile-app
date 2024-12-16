@@ -1,0 +1,86 @@
+{
+  "compilerOptions": {
+    "isolatedModules": false,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "lib": [
+      "es6"
+    ],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "target": "esnext",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "src/*"
+      ],
+      "assets/*": [
+        "assets/*"
+      ],
+      "mocks/*": [
+        "__mocks__/*"
+      ],
+      "jest/*": [
+        "jest/*"
+      ],
+      "storybook/*": [
+        "storybook/*"
+      ],
+      "constants/*": [
+        "src/constants/*"
+      ],
+      "configs/*": [
+        "src/configs/*"
+      ],
+      "context/*": [
+        "src/context/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "theme/*": [
+        "src/theme/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
+      ],
+      "helpers/*": [
+        "src/helpers/*"
+      ],
+      "modals/*": [
+        "src/modals/*"
+      ],
+      "screens/*": [
+        "src/screens/*"
+      ],
+      "translations/*": [
+        "src/translations/*"
+      ],
+      "types/*": [
+        "src/types/*"
+      ],
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "react-native-calendars": [
+        "node_modules/@types/react-native-calendars"
+      ],
+      "react-native-redash/lib/module/v1": [
+        "./node_modules/react-native-redash/lib/typescript/v1/index.d.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+  "extends": "expo/tsconfig.base"
+}
