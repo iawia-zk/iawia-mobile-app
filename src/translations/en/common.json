@@ -1,0 +1,12 @@
+{
+  "label.light": "Light",
+  "label.dark": "Dark",
+  "label.system": "System",
+  "button.cancel": "Cancel",
+  "button.clear": "Clear",
+  "button.skip": "Skip",
+  "button.done": "Done",
+  "label.english": "English",
+  "messages.noInternetConnection.title": "No internet connection",
+  "messages.noInternetConnection.description": "Please check your internet connection and try again."
+}
