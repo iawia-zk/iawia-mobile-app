@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
   createNavigationContainerRef,
@@ -9,19 +8,11 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 
-import {
-  NavigationHeaderBackButton,
-  NavigationHeaderEmptyView,
-  NavigationHeaderCancelButton,
-} from 'components/Navigation';
+import { NavigationHeaderBackButton, NavigationHeaderEmptyView } from 'components/Navigation';
 import Box from 'components/core/Box';
 import Introduction from 'screens/Onboarding/Introduction/Introduction';
 
-import {
-  DEFAULT_STACK_NAVIGATION_OPTIONS,
-  MODAL_SLIDE_FROM_BOTTOM,
-  SLIDE_FROM_RIGHT_ANIMATION,
-} from 'theme/navigation';
+import { DEFAULT_STACK_NAVIGATION_OPTIONS, SLIDE_FROM_RIGHT_ANIMATION } from 'theme/navigation';
 import { FONT_FAMILY } from 'theme/fonts';
 
 import { TRootStackParams } from './AppNavigation.types';
@@ -32,6 +23,8 @@ import { getHeaderBlurStyleByTheme } from 'enums/Theme';
 import { useNavigationContext } from 'context/NavigationProvider';
 import PassportIdScan from './Onboarding/PassportIdScan';
 import getDeviceLanguage from 'helpers/deviceLanguage';
+import PassportNfcRead from './Onboarding/PassportNfcRead';
+import SecurityAttributes from './Onboarding/SecurityAttributes';
 
 export const navigationRef = createNavigationContainerRef();
 export const RootStack = createNativeStackNavigator<TRootStackParams>();
@@ -75,24 +68,22 @@ function AppNavigation() {
           name="PassportIdScan"
           component={PassportIdScan}
           options={{
-            title: t('label.selectCountry'),
+            headerTitle: NavigationHeaderEmptyView,
+            headerLeft: NavigationHeaderEmptyView,
           }}
         />
         <RootStack.Screen
           name="PassportNfcRead"
-          component={Box}
+          component={PassportNfcRead}
           options={{
             headerTitle: NavigationHeaderEmptyView,
           }}
         />
         <RootStack.Screen
           name="SecurityAttributes"
-          component={Box}
+          component={SecurityAttributes}
           options={{
             headerTitle: NavigationHeaderEmptyView,
-            headerLeft: NavigationHeaderEmptyView,
-            headerRight: NavigationHeaderCancelButton,
-            ...MODAL_SLIDE_FROM_BOTTOM,
           }}
         />
       </RootStack.Group>

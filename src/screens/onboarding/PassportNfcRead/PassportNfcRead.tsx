@@ -2,8 +2,8 @@ import React, { useLayoutEffect } from 'react';
 
 import Box from 'components/core/Box';
 
-import { NavigationHeaderStepper } from 'components/Navigation';
 import { TNavigationProps } from 'screens/AppNavigation.types';
+import { NavigationHeaderStepper } from 'components/Navigation';
 import ScrollView from 'components/ScrollView';
 import BottomInsetBox from 'components/BottomInsetBox';
 import Button from 'components/core/Button';
@@ -12,10 +12,10 @@ import PageHeader from 'components/PageHeader';
 import { Image, StyleSheet } from 'react-native';
 import IMAGES from 'constants/images';
 
-function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
+function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: (props) => <NavigationHeaderStepper currentStep={1} totalSteps={3} {...props} />,
+      headerTitle: (props) => <NavigationHeaderStepper currentStep={2} totalSteps={3} {...props} />,
     });
   }, []);
 
@@ -25,25 +25,21 @@ function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
         <Box alignItems="center" mt={'xl'} gap={'l'} flex={1} justifyContent="center">
           <Box>
             <PageHeader
-              titleId="screens.passportIdScan.title"
-              descriptionId="screens.passportIdScan.description"
+              titleId="screens.passportNfcRead.title"
+              descriptionId="screens.passportNfcRead.description"
             />
           </Box>
-          <Image source={IMAGES.passportDrawing} style={styles.image} />
+          <Image source={IMAGES.passportLastpage} style={styles.image} />
         </Box>
       </ScrollView>
       <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
-        <Button
-          labelId="button.openCamera"
-          onPress={() => navigation.navigate('PassportNfcRead')}
-        />
-        <Button labelId="button.manualInput" variant="secondary" onPress={NOOP} />
+        <Button labelId="button.readyToScan" onPress={NOOP} />
       </BottomInsetBox>
     </Box>
   );
 }
 
-export default PassportIdScan;
+export default PassportNfcRead;
 
 const styles = StyleSheet.create({
   image: {

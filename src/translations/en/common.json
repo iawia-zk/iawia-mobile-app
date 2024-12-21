@@ -8,7 +8,13 @@
   "button.clear": "Clear",
   "button.skip": "Skip",
   "button.done": "Done",
+  "button.start": "Start",
+  "button.readyToScan": "I am ready to scan",
   "label.english": "English",
   "messages.noInternetConnection.title": "No internet connection",
-  "messages.noInternetConnection.description": "Please check your internet connection and try again."
+  "messages.noInternetConnection.description": "Please check your internet connection and try again.",
+  "screens.passportIdScan.title": "Scan or type your passport ID",
+  "screens.passportIdScan.description": "Open your passport on the main page to scan it",
+  "screens.passportNfcRead.title": "Verify your Passport using NFC",
+  "screens.passportNfcRead.description": "Put your phone against the last page of the passport"
 }
