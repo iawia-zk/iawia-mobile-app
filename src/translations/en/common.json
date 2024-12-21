@@ -3,6 +3,8 @@
   "label.dark": "Dark",
   "label.system": "System",
   "button.cancel": "Cancel",
+  "button.openCamera": "Open Camera",
+  "button.manualInput": "Manual Input",
   "button.clear": "Clear",
   "button.skip": "Skip",
   "button.done": "Done",

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import {
   createNavigationContainerRef,
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 
@@ -29,8 +29,9 @@ import useNetInfoHandler from 'hooks/useNetInfoHandler';
 import { useThemeContext } from 'context/ThemeProvider';
 import NoInternetConnectionToaster from 'components/NoInternetConnectionToaster';
 import { getHeaderBlurStyleByTheme } from 'enums/Theme';
-import getDeviceLanguage from 'helpers/deviceLanguage';
 import { useNavigationContext } from 'context/NavigationProvider';
+import PassportIdScan from './Onboarding/PassportIdScan';
+import getDeviceLanguage from 'helpers/deviceLanguage';
 
 export const navigationRef = createNavigationContainerRef();
 export const RootStack = createNativeStackNavigator<TRootStackParams>();
@@ -39,7 +40,7 @@ function AppNavigation() {
   const { isNetConnected } = useNetInfoHandler();
   const { colors } = useTheme();
   const { i18n } = useTranslation();
-  const { navigationState, navigationDispatch } = useNavigationContext();
+  const { navigationDispatch, navigationState } = useNavigationContext();
   const { themeDispatch } = useThemeContext();
 
   useEffect(() => {
@@ -50,25 +51,10 @@ function AppNavigation() {
     try {
       const locale = await getDeviceLanguage();
       await i18n.changeLanguage(locale);
-      await handleAppInitialNavigation();
+      return navigationDispatch.setInitialRouteName('Introduction');
     } catch (e) {
-      await handleAppInitialNavigation();
+      return navigationDispatch.setInitialRouteName('Introduction');
     }
-  }
-
-  async function handleAppInitialNavigation() {
-    // await storage.removeStorageFromKeys([
-    //   STORAGE_KEYS.PRIVATE_KEY,
-    // ]);
-    navigationDispatch.setShowAuthorizedScreens(false);
-    // const rememberedWallet = await storage.readStorage(STORAGE_KEYS.PRIVATE_KEY);
-
-    // if (rememberedWallet) {
-    //   authDispatch.saveRememberedAccount(rememberedAccount);
-    //   return navigationDispatch.setInitialRouteName('QuickLogin', { shouldInitiateLogin: true });
-    // }
-
-    return navigationDispatch.setInitialRouteName('Introduction');
   }
 
   function renderOnboardingScreens() {
@@ -87,7 +73,7 @@ function AppNavigation() {
         />
         <RootStack.Screen
           name="PassportIdScan"
-          component={Box}
+          component={PassportIdScan}
           options={{
             title: t('label.selectCountry'),
           }}
@@ -125,10 +111,6 @@ function AppNavigation() {
       </>
     );
   }
-
-  // if (navigationState.navigationLoading) {
-  //   return null;
-  // }
 
   return (
     <>
