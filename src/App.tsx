@@ -7,8 +7,9 @@ import AppNavigation from 'screens/AppNavigation';
 function App(): ReactElement {
   return (
     <SafeAreaView>
-      <AppNavigation />
-      <ThemeProvider />
+      <ThemeProvider>
+        <AppNavigation />
+      </ThemeProvider>
     </SafeAreaView>
   );
 }

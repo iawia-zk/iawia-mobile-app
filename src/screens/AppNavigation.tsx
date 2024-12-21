@@ -14,6 +14,8 @@ import {
   NavigationHeaderEmptyView,
   NavigationHeaderCancelButton,
 } from 'components/Navigation';
+import Box from 'components/core/Box';
+import Introduction from 'screens/Onboarding/Introduction/Introduction';
 
 import {
   DEFAULT_STACK_NAVIGATION_OPTIONS,
@@ -29,7 +31,6 @@ import NoInternetConnectionToaster from 'components/NoInternetConnectionToaster'
 import { getHeaderBlurStyleByTheme } from 'enums/Theme';
 import getDeviceLanguage from 'helpers/deviceLanguage';
 import { useNavigationContext } from 'context/NavigationProvider';
-import Box from 'components/core/Box';
 
 export const navigationRef = createNavigationContainerRef();
 export const RootStack = createNativeStackNavigator<TRootStackParams>();
@@ -66,6 +67,7 @@ function AppNavigation() {
     //   authDispatch.saveRememberedAccount(rememberedAccount);
     //   return navigationDispatch.setInitialRouteName('QuickLogin', { shouldInitiateLogin: true });
     // }
+
     return navigationDispatch.setInitialRouteName('Introduction');
   }
 
@@ -77,7 +79,7 @@ function AppNavigation() {
         }}>
         <RootStack.Screen
           name="Introduction"
-          component={Box}
+          component={Introduction}
           options={{
             headerTitle: NavigationHeaderEmptyView,
             headerLeft: NavigationHeaderEmptyView,
@@ -124,9 +126,9 @@ function AppNavigation() {
     );
   }
 
-  if (navigationState.navigationLoading) {
-    return null;
-  }
+  // if (navigationState.navigationLoading) {
+  //   return null;
+  // }
 
   return (
     <>
