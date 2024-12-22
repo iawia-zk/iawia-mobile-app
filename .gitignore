@@ -72,6 +72,8 @@ coverage
 # release apk
 android/app/release
 
+android/app/.cxx
+
 # Ruby / CocoaPods
 /vendor/bundle/
 
@@ -79,3 +81,4 @@ android/app/release
 .expo
 dist/
 web-build/
+assets/mock

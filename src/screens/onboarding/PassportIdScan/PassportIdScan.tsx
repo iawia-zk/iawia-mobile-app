@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 
 import Box from 'components/core/Box';
 
@@ -11,12 +11,19 @@ import { NOOP } from 'constants/noop';
 import PageHeader from 'components/PageHeader';
 import { Image, StyleSheet } from 'react-native';
 import IMAGES from 'constants/images';
+import { useOnboardingContext } from 'context/OnboardingProvider';
+import { mockData } from 'constants/mockData';
 
 function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
+  const { onboardingDispatch } = useOnboardingContext();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: (props) => <NavigationHeaderStepper currentStep={1} totalSteps={3} {...props} />,
     });
+  }, []);
+
+  useEffect(() => {
+    onboardingDispatch.setPassportId(mockData.mockPassportId.id);
   }, []);
 
   return (

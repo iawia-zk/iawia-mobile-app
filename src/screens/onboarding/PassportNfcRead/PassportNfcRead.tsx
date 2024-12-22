@@ -7,17 +7,30 @@ import { NavigationHeaderStepper } from 'components/Navigation';
 import ScrollView from 'components/ScrollView';
 import BottomInsetBox from 'components/BottomInsetBox';
 import Button from 'components/core/Button';
-import { NOOP } from 'constants/noop';
 import PageHeader from 'components/PageHeader';
 import { Image, StyleSheet } from 'react-native';
 import IMAGES from 'constants/images';
+import useNFC from 'hooks/useNFC';
+import { useOnboardingContext } from 'context/OnboardingProvider';
 
 function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
+  const { readNFC } = useNFC();
+  const { onboardingDispatch } = useOnboardingContext();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: (props) => <NavigationHeaderStepper currentStep={2} totalSteps={3} {...props} />,
     });
   }, []);
+
+  async function handleNFCRead() {
+    // TODO: (serhat) handle bottom popup
+    const response = await readNFC();
+    if (response) {
+      onboardingDispatch.setPassportData(response);
+      navigation.navigate('SecurityAttributes');
+    }
+  }
 
   return (
     <Box flex={1}>
@@ -33,7 +46,7 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
         </Box>
       </ScrollView>
       <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
-        <Button labelId="button.readyToScan" onPress={NOOP} />
+        <Button labelId="button.readyToScan" onPress={handleNFCRead} />
       </BottomInsetBox>
     </Box>
   );

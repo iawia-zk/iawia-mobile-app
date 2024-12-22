@@ -9,6 +9,7 @@
   "button.skip": "Skip",
   "button.done": "Done",
   "button.start": "Start",
+  "button.generate": "Generate",
   "button.readyToScan": "I am ready to scan",
   "label.english": "English",
   "messages.noInternetConnection.title": "No internet connection",
@@ -16,5 +17,9 @@
   "screens.passportIdScan.title": "Scan or type your passport ID",
   "screens.passportIdScan.description": "Open your passport on the main page to scan it",
   "screens.passportNfcRead.title": "Verify your Passport using NFC",
-  "screens.passportNfcRead.description": "Put your phone against the last page of the passport"
+  "screens.passportNfcRead.description": "Put your phone against the last page of the passport",
+  "screens.securityAttributes.gender": "Birthdate",
+  "screens.securityAttributes.nationality": "Nationality",
+  "screens.securityAttributes.expiryDate": "Expiry Date",
+  "screens.securityAttributes.dateOfBirth": "Date of Birth"
 }

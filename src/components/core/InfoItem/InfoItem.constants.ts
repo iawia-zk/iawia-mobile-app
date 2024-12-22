@@ -1,0 +1,2 @@
+export const ONLY_VALUE_MIN_HEIGHT = 24;
+export const WITH_DESCRIPTION_MIN_HEIGHT = 48;
