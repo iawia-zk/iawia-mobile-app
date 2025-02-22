@@ -14,6 +14,7 @@ import useNFC from 'hooks/useNFC';
 import { useOnboardingContext } from 'context/OnboardingProvider';
 
 function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const { readNFC } = useNFC();
   const { onboardingDispatch } = useOnboardingContext();
 
@@ -24,12 +25,14 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
   }, []);
 
   async function handleNFCRead() {
+    setIsLoading(true);
     // TODO: (serhat) handle bottom popup
     const response = await readNFC();
     if (response) {
       onboardingDispatch.setPassportData(response);
       navigation.navigate('SecurityAttributes');
     }
+    setIsLoading(false);
   }
 
   return (
@@ -46,7 +49,7 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
         </Box>
       </ScrollView>
       <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
-        <Button labelId="button.readyToScan" onPress={handleNFCRead} />
+        <Button labelId="button.readyToScan" onPress={handleNFCRead} loading={isLoading} />
       </BottomInsetBox>
     </Box>
   );

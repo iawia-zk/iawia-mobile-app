@@ -14,14 +14,20 @@ function useNFC() {
   const { onboardingState } = useOnboardingContext();
   const isMock = Config.DATA_SOURCE === DataSource.MOCK;
 
+  console.log('isMock', isMock);
+
   NfcManager.start();
 
   async function readNFC(): Promise<PassportData | void> {
     try {
-      !isMock &&
-        (await NfcManager.requestTechnology(NfcTech.NfcA, {
-          alertMessage: 'Place your passport',
-        }));
+      // !isMock &&
+      //   (await NfcManager.requestTechnology(NfcTech.Ndef, {
+      //     alertMessage: 'Place your passport',
+      //   }));
+
+      if (isMock) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      }
 
       // TODO: (serhat) implement platform check
       const result = await scanAndroid();

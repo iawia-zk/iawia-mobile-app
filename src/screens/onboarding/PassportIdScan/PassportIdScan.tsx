@@ -7,15 +7,18 @@ import { TNavigationProps } from 'screens/AppNavigation.types';
 import ScrollView from 'components/ScrollView';
 import BottomInsetBox from 'components/BottomInsetBox';
 import Button from 'components/core/Button';
-import { NOOP } from 'constants/noop';
 import PageHeader from 'components/PageHeader';
 import { Image, StyleSheet } from 'react-native';
 import IMAGES from 'constants/images';
 import { useOnboardingContext } from 'context/OnboardingProvider';
 import { mockData } from 'constants/mockData';
+import TextInput from 'components/core/TextInput';
 
 function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
   const { onboardingDispatch } = useOnboardingContext();
+  const [showManualText, setShowManualText] = React.useState(false);
+  const [manualText, setManualText] = React.useState('');
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: (props) => <NavigationHeaderStepper currentStep={1} totalSteps={3} {...props} />,
@@ -25,6 +28,22 @@ function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
   useEffect(() => {
     onboardingDispatch.setPassportId(mockData.mockPassportId.id);
   }, []);
+
+  function handleCameraOpen() {
+    console.log('showManualText');
+    if (showManualText) {
+      let text = manualText;
+      if (!text.includes('/n')) {
+        text = '.\n' + text;
+      }
+      onboardingDispatch.setPassportId(text);
+      // onboardingDispatch.setPassportId(mockData.mockPassportId.id);
+      navigation.navigate('PassportNfcRead');
+      return;
+    }
+
+    setShowManualText(true);
+  }
 
   return (
     <Box flex={1}>
@@ -37,14 +56,24 @@ function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
             />
           </Box>
           <Image source={IMAGES.passportDrawing} style={styles.image} />
+          {showManualText && (
+            <TextInput
+              labelId="button.manualInput"
+              placeholderId="button.manualInput"
+              value={manualText}
+              onChangeText={setManualText}
+              hasError={false}
+            />
+          )}
         </Box>
       </ScrollView>
       <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
+        <Button labelId="button.openCamera" onPress={handleCameraOpen} />
         <Button
-          labelId="button.openCamera"
-          onPress={() => navigation.navigate('PassportNfcRead')}
+          labelId={!showManualText ? 'button.manualInput' : 'button.proceed'}
+          variant="secondary"
+          onPress={handleCameraOpen}
         />
-        <Button labelId="button.manualInput" variant="secondary" onPress={NOOP} />
       </BottomInsetBox>
     </Box>
   );

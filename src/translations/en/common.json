@@ -3,6 +3,7 @@
   "label.dark": "Dark",
   "label.system": "System",
   "button.cancel": "Cancel",
+  "button.proceed": "Proceed",
   "button.openCamera": "Open Camera",
   "button.manualInput": "Manual Input",
   "button.clear": "Clear",
@@ -18,7 +19,7 @@
   "screens.passportIdScan.description": "Open your passport on the main page to scan it",
   "screens.passportNfcRead.title": "Verify your Passport using NFC",
   "screens.passportNfcRead.description": "Put your phone against the last page of the passport",
-  "screens.securityAttributes.gender": "Birthdate",
+  "screens.securityAttributes.gender": "Gender",
   "screens.securityAttributes.nationality": "Nationality",
   "screens.securityAttributes.expiryDate": "Expiry Date",
   "screens.securityAttributes.dateOfBirth": "Date of Birth"
