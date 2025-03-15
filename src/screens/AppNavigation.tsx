@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   createNavigationContainerRef,
@@ -9,7 +9,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 
 import { NavigationHeaderBackButton, NavigationHeaderEmptyView } from 'components/Navigation';
-import Box from 'components/core/Box';
 import Introduction from 'screens/Onboarding/Introduction/Introduction';
 
 import { DEFAULT_STACK_NAVIGATION_OPTIONS, SLIDE_FROM_RIGHT_ANIMATION } from 'theme/navigation';
@@ -25,6 +24,10 @@ import PassportIdScan from './Onboarding/PassportIdScan';
 import getDeviceLanguage from 'helpers/deviceLanguage';
 import PassportNfcRead from './Onboarding/PassportNfcRead';
 import SecurityAttributes from './Onboarding/SecurityAttributes';
+import History from './Home/History';
+import ZeroKnowledgeProof from './Home/ZeroKnowledgeProof';
+import storage, { STORAGE_KEYS } from 'helpers/storage';
+import BottomTabBarNavigator from 'components/BottomTabBarNavigator';
 
 export const navigationRef = createNavigationContainerRef();
 export const RootStack = createNativeStackNavigator<TRootStackParams>();
@@ -35,6 +38,7 @@ function AppNavigation() {
   const { i18n } = useTranslation();
   const { navigationDispatch, navigationState } = useNavigationContext();
   const { themeDispatch } = useThemeContext();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     handleAppInitFlow();
@@ -44,10 +48,41 @@ function AppNavigation() {
     try {
       const locale = await getDeviceLanguage();
       await i18n.changeLanguage(locale);
-      return navigationDispatch.setInitialRouteName('Introduction');
+      await handleAppInitialNavigation();
     } catch (e) {
-      return navigationDispatch.setInitialRouteName('Introduction');
+      await handleAppInitialNavigation();
     }
+    setIsInitialized(true);
+  }
+
+  async function handleAppInitialNavigation() {
+    const rememberedWalletData = await storage.readStorage(STORAGE_KEYS.WALLET_DATA);
+
+    if (!rememberedWalletData) {
+      console.log('handleAppInitialNavigation', 'Wallet');
+      navigationDispatch.setInitialRouteName('Wallet');
+      return;
+    }
+    console.log('handleAppInitialNavigation', 'Introduction');
+    navigationDispatch.setInitialRouteName('Introduction');
+    return;
+  }
+
+  if (!isInitialized) {
+    return null;
+  }
+
+  function renderMainScreens() {
+    return (
+      <>
+        <RootStack.Group
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <RootStack.Screen name="Wallet" component={BottomTabBarNavigator} />
+        </RootStack.Group>
+      </>
+    );
   }
 
   function renderOnboardingScreens() {
@@ -97,7 +132,8 @@ function AppNavigation() {
           screenOptions={{
             headerShown: false,
           }}>
-          <RootStack.Screen name="Wallet" component={Box} />
+          <RootStack.Screen name="History" component={History} />
+          <RootStack.Screen name="ZeroKnowledgeProof" component={ZeroKnowledgeProof} />
         </RootStack.Group>
       </>
     );
@@ -132,6 +168,7 @@ function AppNavigation() {
             navigationBarColor: colors.backgroundPrimary,
           }}
           initialRouteName={navigationState.initialRouteName}>
+          {renderMainScreens()}
           {renderOnboardingScreens()}
           {renderHomeScreens()}
         </RootStack.Navigator>
