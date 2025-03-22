@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import React, { ReactElement } from 'react';
 
 import ThemeProvider from 'context/ThemeProvider';
@@ -7,6 +8,7 @@ import NavigationProvider from 'context/NavigationProvider';
 import 'configs/i18n';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import OnboardingProvider from 'context/OnboardingProvider';
+import WalletProvider from 'context/WalletProvider';
 
 function App(): ReactElement {
   return (
@@ -14,7 +16,9 @@ function App(): ReactElement {
       <ThemeProvider>
         <OnboardingProvider>
           <NavigationProvider>
-            <AppNavigation />
+            <WalletProvider>
+              <AppNavigation />
+            </WalletProvider>
           </NavigationProvider>
         </OnboardingProvider>
       </ThemeProvider>

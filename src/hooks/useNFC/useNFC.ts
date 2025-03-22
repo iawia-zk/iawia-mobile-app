@@ -1,7 +1,7 @@
 // @ts-ignore
 import PassportReader from 'react-native-passport-reader';
 import Config from 'react-native-config';
-import NfcManager, { NfcTech } from 'react-native-nfc-manager';
+import NfcManager from 'react-native-nfc-manager';
 
 import extractMRZInfo from 'helpers/extractMrz';
 import DataSource from 'enums/DataSource';

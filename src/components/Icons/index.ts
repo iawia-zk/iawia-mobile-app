@@ -9,3 +9,5 @@ export { default as AlertCircleIcon } from './views/AlertCircleIcon';
 export { default as CheckVerified01Icon } from './views/CheckVerified01Icon';
 export { default as Hourglass01Icon } from './views/Hourglass01Icon';
 export { default as InfoCircleIcon } from './views/InfoCircleIcon';
+export { default as Copy07Icon } from './views/Copy07Icon';
+export { default as FileCheck03Icon } from './views/FileCheck03Icon';

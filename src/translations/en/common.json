@@ -22,5 +22,15 @@
   "screens.securityAttributes.gender": "Gender",
   "screens.securityAttributes.nationality": "Nationality",
   "screens.securityAttributes.expiryDate": "Expiry Date",
-  "screens.securityAttributes.dateOfBirth": "Date of Birth"
+  "screens.securityAttributes.dateOfBirth": "Date of Birth",
+  "label.copy": "Copy",
+  "label.copied": "Copied",
+  "label.phrase": "Phrase",
+  "label.walletAddress": "Wallet Address",
+  "label.balance": "Balance",
+  "button.generateWallet": "Generate Wallet",
+  "button.importWallet": "Import Wallet",
+  "button.sendInitialTransaction": "Send Initial Transaction",
+  "button.getTransactions": "Get Transactions",
+  "label.txData": "Transaction Data"
 }
