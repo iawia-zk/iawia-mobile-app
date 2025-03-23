@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, useContext, useEffect, useState } from 'react';
-import { TWalletContext, TWalletState } from './WalletProvider.types';
+import { TWalletContext, TWalletData, TWalletState } from './WalletProvider.types';
 import { INITIAL_DISPATCH, INITIAL_STATE } from './WalletProvider.constants';
 import { TChildrenOnly } from 'types/common';
 import { WalletService } from 'helpers/walletService';
@@ -25,7 +25,7 @@ function WalletProvider({ children }: TChildrenOnly): ReactElement {
     init();
   }, []);
 
-  function sendInitialTransaction(data: string) {
+  function sendInitialTransaction(data: TWalletData) {
     walletService?.sendInitialTransaction(data);
   }
 

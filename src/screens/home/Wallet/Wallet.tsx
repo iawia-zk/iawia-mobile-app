@@ -13,6 +13,7 @@ const Wallet = () => {
   const [phrase, setPhrase] = useState(walletState.wallet?.mnemonic?.phrase);
   const [txDataLoading, setTxDataLoading] = useState(false);
   const [txData, setTxData] = useState<string | null>(null);
+
   async function getTransactionData() {
     setTxDataLoading(true);
     const transactions = await walletService.getTransactions();
@@ -45,10 +46,9 @@ const Wallet = () => {
         <CopyInfoItem labelId="label.balance" value={walletState.balance ?? '-'} />
         {txData && <CopyInfoItem labelId="label.txData" value={txData} />}
         <Button onPress={walletDispatch.generateWallet} labelId="button.generateWallet" />
-        <Button onPress={() => walletDispatch.importWallet(phrase)} labelId="button.importWallet" />
         <Button
-          onPress={() => walletDispatch.sendInitialTransaction('Hello from serhat')}
-          labelId="button.sendInitialTransaction"
+          onPress={() => walletDispatch.importWallet(phrase ?? '')}
+          labelId="button.importWallet"
         />
         <Button
           onPress={getTransactionData}

@@ -3,7 +3,7 @@ import { BURN_ADDRESS, TEST_CHAIN_KEY } from './walletService.constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEYS } from 'helpers/storage';
 import { TTransaction, TTransactionDetails } from 'types/wallet';
-
+import { TWalletData } from 'context/WalletProvider/WalletProvider.types';
 class WalletService {
   private provider: JsonRpcProvider;
   private connectedWallet: HDNodeWallet | undefined;
@@ -40,8 +40,8 @@ class WalletService {
     return ethers.formatEther(balance);
   }
 
-  async sendInitialTransaction(data: string) {
-    const hexData = ethers.hexlify(ethers.toUtf8Bytes(data));
+  async sendInitialTransaction(data: TWalletData) {
+    const hexData = ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify(data)));
 
     const tx = {
       to: BURN_ADDRESS,
