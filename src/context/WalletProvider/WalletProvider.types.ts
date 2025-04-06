@@ -18,10 +18,13 @@ export type TWalletContext = {
 export type TWalletState = {
   wallet?: HDNodeWallet;
   balance?: string;
+  walletData?: TWalletData;
 };
 
 export type TWalletDispatch = {
+  init: () => void;
   generateWallet: () => void;
   importWallet: (phrase: string) => void;
   sendInitialTransaction: (data: TWalletData) => void;
+  setWalletData: (data: TWalletData) => void;
 };

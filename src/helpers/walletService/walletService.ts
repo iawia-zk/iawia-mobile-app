@@ -1,7 +1,7 @@
 import { ethers, HDNodeWallet, JsonRpcProvider } from 'ethers';
 import { BURN_ADDRESS, TEST_CHAIN_KEY } from './walletService.constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEYS } from 'helpers/storage';
+import storage, { STORAGE_KEYS } from 'helpers/storage';
 import { TTransaction, TTransactionDetails } from 'types/wallet';
 import { TWalletData } from 'context/WalletProvider/WalletProvider.types';
 class WalletService {
@@ -13,8 +13,7 @@ class WalletService {
   }
 
   async importLocalWallet() {
-    const phrase = await AsyncStorage.getItem(STORAGE_KEYS.WALLET_PHRASE);
-    console.log('phrase', phrase);
+    const phrase = await storage.readStorage(STORAGE_KEYS.WALLET_PHRASE);
     if (!phrase) {
       return null;
     }

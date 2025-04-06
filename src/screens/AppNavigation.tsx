@@ -26,8 +26,8 @@ import PassportNfcRead from './Onboarding/PassportNfcRead';
 import SecurityAttributes from './Onboarding/SecurityAttributes';
 import History from './Home/History';
 import ZeroKnowledgeProof from './Home/ZeroKnowledgeProof';
-import storage, { STORAGE_KEYS } from 'helpers/storage';
 import BottomTabBarNavigator from 'components/BottomTabBarNavigator';
+import storage, { STORAGE_KEYS } from 'helpers/storage';
 
 export const navigationRef = createNavigationContainerRef();
 export const RootStack = createNativeStackNavigator<TRootStackParams>();
@@ -56,14 +56,12 @@ function AppNavigation() {
   }
 
   async function handleAppInitialNavigation() {
-    const rememberedWalletData = await storage.readStorage(STORAGE_KEYS.WALLET_DATA);
+    const walletPhrase = await storage.readStorage(STORAGE_KEYS.WALLET_PHRASE);
 
-    if (!rememberedWalletData) {
-      console.log('handleAppInitialNavigation', 'Wallet');
+    if (walletPhrase) {
       navigationDispatch.setInitialRouteName('Wallet');
       return;
     }
-    console.log('handleAppInitialNavigation', 'Introduction');
     navigationDispatch.setInitialRouteName('Introduction');
     return;
   }

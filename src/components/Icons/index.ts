@@ -11,3 +11,6 @@ export { default as Hourglass01Icon } from './views/Hourglass01Icon';
 export { default as InfoCircleIcon } from './views/InfoCircleIcon';
 export { default as Copy07Icon } from './views/Copy07Icon';
 export { default as FileCheck03Icon } from './views/FileCheck03Icon';
+export { default as WalletIcon } from './views/WalletIcon';
+export { default as IdIcon } from './views/IdIcon';
+export { default as User01Icon } from './views/User01Icon';

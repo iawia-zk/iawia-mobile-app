@@ -23,8 +23,11 @@ async function writeStorageFromKeys(keyValuePairs: Partial<Record<TStorageKeys, 
 
 async function writeStorage(key: TStorageKeys, data: any) {
   try {
+    console.log('yazdık');
     await AsyncStorage.setItem(`${STORAGE_PREFIX}${key}`, JSON.stringify(data));
-  } catch (e) {}
+  } catch (e) {
+    console.log('writeStorage', 'error');
+  }
 }
 
 async function removeStorage(key: TStorageKeys) {

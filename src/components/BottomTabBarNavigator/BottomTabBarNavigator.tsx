@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Bell03Icon } from 'components/Icons';
 import Text from 'components/core/Text';
 
 import { useThemeContext } from 'context/ThemeProvider';
@@ -19,6 +18,7 @@ import { TAB_BAR_HEIGHT } from './BottomTabBarNavigator.constants';
 import Wallet from 'screens/Home/Wallet';
 import History from 'screens/Home/History';
 import ZeroKnowledgeProof from 'screens/Home/ZeroKnowledgeProof';
+import { IdIcon, User01Icon, WalletIcon } from 'components/Icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -46,11 +46,11 @@ function BottomTabBarNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }: TTabBarIconParams) => (
-            <Bell03Icon iconColor={focused ? 'textActive' : 'textSecondary'} />
+            <WalletIcon iconColor={focused ? 'textActive' : 'textSecondary'} />
           ),
           tabBarLabel: ({ focused }: TTabBarIconParams) => (
             <Text
-              textId="label.light"
+              textId="label.wallet"
               color={focused ? 'textActive' : 'textSecondary'}
               variant={focused ? 'textBodySmallBold' : 'textBodySmall'}
             />
@@ -63,11 +63,11 @@ function BottomTabBarNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }: TTabBarIconParams) => (
-            <Bell03Icon iconColor={focused ? 'textActive' : 'textSecondary'} />
+            <IdIcon iconColor={focused ? 'textActive' : 'textSecondary'} />
           ),
           tabBarLabel: ({ focused }: TTabBarIconParams) => (
             <Text
-              textId="label.light"
+              textId="label.zkProof"
               color={focused ? 'textActive' : 'textSecondary'}
               variant={focused ? 'textBodySmallBold' : 'textBodySmall'}
             />
@@ -80,11 +80,11 @@ function BottomTabBarNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }: TTabBarIconParams) => (
-            <Bell03Icon iconColor={focused ? 'textActive' : 'textSecondary'} />
+            <User01Icon iconColor={focused ? 'textActive' : 'textSecondary'} />
           ),
           tabBarLabel: ({ focused }: TTabBarIconParams) => (
             <Text
-              textId="label.light"
+              textId="label.history"
               color={focused ? 'textActive' : 'textSecondary'}
               variant={focused ? 'textBodySmallBold' : 'textBodySmall'}
             />
@@ -143,7 +143,7 @@ function ZKProofStack() {
         name="ZeroKnowledgeProof"
         component={ZeroKnowledgeProof as any}
         options={{
-          headerTitle: t('label.transfers'),
+          headerTitle: t('label.zkProof'),
         }}
       />
     </Stack.Navigator>
@@ -174,7 +174,7 @@ function HistoryStack() {
         name="History"
         component={History as any}
         options={{
-          headerTitle: t('label.cards'),
+          headerTitle: t('label.history'),
         }}
       />
     </Stack.Navigator>

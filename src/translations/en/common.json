@@ -33,5 +33,8 @@
   "button.sendInitialTransaction": "Send Initial Transaction",
   "button.getTransactions": "Get Transactions",
   "label.txData": "Transaction Data",
-  "button.startTransaction": "Start Transaction"
+  "button.startTransaction": "Start Transaction",
+  "label.history": "History",
+  "label.wallet": "Wallet",
+  "label.zkProof": "Proofs"
 }
