@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 
 import { NavigationHeaderBackButton, NavigationHeaderEmptyView } from 'components/Navigation';
-import Introduction from 'screens/Onboarding/Introduction/Introduction';
+import Introduction from 'screens/onboarding/Introduction/Introduction';
 
 import { DEFAULT_STACK_NAVIGATION_OPTIONS, SLIDE_FROM_RIGHT_ANIMATION } from 'theme/navigation';
 import { FONT_FAMILY } from 'theme/fonts';
@@ -20,12 +20,12 @@ import { useThemeContext } from 'context/ThemeProvider';
 import NoInternetConnectionToaster from 'components/NoInternetConnectionToaster';
 import { getHeaderBlurStyleByTheme } from 'enums/Theme';
 import { useNavigationContext } from 'context/NavigationProvider';
-import PassportIdScan from './Onboarding/PassportIdScan';
+import PassportIdScan from './onboarding/PassportIdScan';
 import getDeviceLanguage from 'helpers/deviceLanguage';
-import PassportNfcRead from './Onboarding/PassportNfcRead';
-import SecurityAttributes from './Onboarding/SecurityAttributes';
-import History from './Home/History';
-import ZeroKnowledgeProof from './Home/ZeroKnowledgeProof';
+import PassportNfcRead from './onboarding/PassportNfcRead';
+import SecurityAttributes from './onboarding/SecurityAttributes';
+import History from './home/History';
+import ZeroKnowledgeProof from './home/ZeroKnowledgeProof';
 import BottomTabBarNavigator from 'components/BottomTabBarNavigator';
 import storage, { STORAGE_KEYS } from 'helpers/storage';
 

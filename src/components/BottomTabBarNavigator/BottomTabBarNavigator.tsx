@@ -15,9 +15,9 @@ import spacing from 'theme/spacing';
 
 import { TTabBarIconParams } from './BottomTabBarNavigator.types';
 import { TAB_BAR_HEIGHT } from './BottomTabBarNavigator.constants';
-import Wallet from 'screens/Home/Wallet';
-import History from 'screens/Home/History';
-import ZeroKnowledgeProof from 'screens/Home/ZeroKnowledgeProof';
+import Wallet from 'screens/home/Wallet';
+import History from 'screens/home/History';
+import ZeroKnowledgeProof from 'screens/home/ZeroKnowledgeProof';
 import { IdIcon, User01Icon, WalletIcon } from 'components/Icons';
 
 const Tab = createBottomTabNavigator();
