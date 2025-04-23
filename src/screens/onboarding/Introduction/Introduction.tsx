@@ -18,7 +18,7 @@ function Introduction({ navigation }: TNavigationProps<'Introduction'>) {
           <Button
             labelId="button.start"
             //   leftIcon={Upload04Icon}
-            onPress={() => navigation.navigate('PassportIdScan')}
+            onPress={() => navigation.navigate('PassportCameraScan')}
           />
         </BottomInsetBox>
       </Box>

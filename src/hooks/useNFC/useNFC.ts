@@ -20,10 +20,10 @@ function useNFC() {
 
   async function readNFC(): Promise<PassportData | void> {
     try {
-      // !isMock &&
-      //   (await NfcManager.requestTechnology(NfcTech.Ndef, {
-      //     alertMessage: 'Place your passport',
-      //   }));
+      !isMock &&
+        (await NfcManager.requestTechnology(NfcTech.Ndef, {
+          alertMessage: 'Place your passport',
+        }));
 
       if (isMock) {
         await new Promise((resolve) => setTimeout(resolve, 3000));

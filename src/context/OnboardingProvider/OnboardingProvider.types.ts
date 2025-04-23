@@ -1,4 +1,5 @@
 import { PassportData } from 'hooks/useNFC/useNFC.types';
+// TODO: (eren) PassportData no longer means the same thing, look how to refactor this
 
 export type TOnboardingContext = {
   onboardingState: TOnboardingState;

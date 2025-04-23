@@ -23,3 +23,13 @@ export function getCurrentDateYYMMDD(dayDiff: number = 0): number[] {
   const yymmdd = `${YY}${MM}${DD}`;
   return Array.from(yymmdd).map((char) => parseInt(char, 10));
 }
+
+export function formatDateToYYMMDD(inputDate: string) {
+  // Extract the date components directly from the input string
+  const year = inputDate.substring(2, 4); // Get YY part
+  const month = inputDate.substring(5, 7); // Get MM part
+  const day = inputDate.substring(8, 10); // Get DD part
+
+  // Concatenate components into YYMMDD format
+  return year + month + day;
+}

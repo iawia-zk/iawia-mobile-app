@@ -1,6 +1,6 @@
 export type TOnboardingScreensParams = {
   Introduction: undefined;
-  PassportIdScan?: undefined;
+  PassportCameraScan?: undefined;
   PassportNfcRead?: undefined;
   SecurityAttributes?: undefined;
 };

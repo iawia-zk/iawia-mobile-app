@@ -20,7 +20,7 @@ import { useThemeContext } from 'context/ThemeProvider';
 import NoInternetConnectionToaster from 'components/NoInternetConnectionToaster';
 import { getHeaderBlurStyleByTheme } from 'enums/Theme';
 import { useNavigationContext } from 'context/NavigationProvider';
-import PassportIdScan from './onboarding/PassportIdScan';
+import PassportCameraScan from './onboarding/PassportCameraScan';
 import getDeviceLanguage from 'helpers/deviceLanguage';
 import PassportNfcRead from './onboarding/PassportNfcRead';
 import SecurityAttributes from './onboarding/SecurityAttributes';
@@ -98,8 +98,8 @@ function AppNavigation() {
           }}
         />
         <RootStack.Screen
-          name="PassportIdScan"
-          component={PassportIdScan}
+          name="PassportCameraScan"
+          component={PassportCameraScan}
           options={{
             headerTitle: NavigationHeaderEmptyView,
             headerLeft: NavigationHeaderEmptyView,

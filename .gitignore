@@ -82,3 +82,4 @@ android/app/.cxx
 dist/
 web-build/
 assets/mock
+src/screens/onboarding/PassportNfcRead/PassportNfcScanExample.tsx
