@@ -10,11 +10,65 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("org.mozilla.rust-android-gradle:plugin:0.9.3")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+    configurations.configureEach {
+        resolutionStrategy.dependencySubstitution {
+            substitute(platform(module('com.gemalto.jp2:jp2-android'))) using module('com.github.Tgo1014:JP2ForAndroid:1.0.4')
+        }
+        // resolutionStrategy.force 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                def manifestFile = project.file('src/main/AndroidManifest.xml')
+                def buildGradleFile = project.file('build.gradle')
+
+                if (buildGradleFile.exists()) {
+                    def buildGradleText = buildGradleFile.text
+                    def namespaceMatcher = buildGradleText =~ /namespace\s*['"](.+?)['"]/
+                    if (namespaceMatcher.find()) {
+                        namespace = namespaceMatcher[0][1]
+                        println "Set namespace for ${project.name} to ${namespace} from build.gradle"
+                        return
+                    }
+                }
+
+                if (manifestFile.exists()) {
+                    def manifestText = manifestFile.text
+                    def packageMatcher = manifestText =~ /package="([\w\.]+)"/
+                    if (packageMatcher.find()) {
+                        def packageName = packageMatcher[0][1]
+                        namespace = packageName
+                        println "Set namespace for ${project.name} to ${namespace} from AndroidManifest.xml"
+                    } else {
+                        namespace = project.group
+                        println "No 'package' attribute found. Set namespace for ${project.name} to ${namespace}"
+                    }
+                } else {
+                    namespace = project.group
+                    println "AndroidManifest.xml not found. Set namespace for ${project.name} to ${namespace}"
+                }
+            }
+        }
     }
 }
 
