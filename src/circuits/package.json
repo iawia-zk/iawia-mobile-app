@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@zk-email/circuits": "^6.3.3-nightly-20250214"
+  }
+}
