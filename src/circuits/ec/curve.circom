@@ -195,8 +195,11 @@ template EllipticCurvePrecomputePipinger(A, B, P, WINDOW_SIZE){
 }
 
 template EllipticCurveDouble( A, B, P){
+    var n = 66;
+    var k = 8;
     signal input in[2][k];
     signal output out[2][k];
+    
 
     var long_3[k];
     long_3[0] = 3;
@@ -228,6 +231,8 @@ template EllipticCurveDouble( A, B, P){
 
 
 template EllipticCurveAdd(A, B, P){
+    var n = 66;
+    var k = 8;
     signal input in1[2][k];
     signal input in2[2][k];
     
