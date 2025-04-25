@@ -13,10 +13,14 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        maven {
+            url 'https://jitpack.io'
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("com.google.gms:google-services:4.3.14")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
         classpath("org.mozilla.rust-android-gradle:plugin:0.9.3")
     }

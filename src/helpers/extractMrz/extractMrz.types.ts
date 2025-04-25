@@ -1,5 +1,5 @@
 export type MrzResult = {
-  documentNumber: string;
   birthDate: string;
+  documentNumber: string;
   expiryDate: string;
 };

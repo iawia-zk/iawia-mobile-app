@@ -1,1 +1,1 @@
-export { yymmddToDate, epochToDate } from './date';
+export { yymmddToDate, epochToDate, getCurrentDateYYMMDD } from './date';

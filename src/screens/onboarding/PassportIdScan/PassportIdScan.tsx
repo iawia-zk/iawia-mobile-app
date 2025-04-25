@@ -1,4 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 import Box from 'components/core/Box';
 
@@ -8,16 +9,13 @@ import ScrollView from 'components/ScrollView';
 import BottomInsetBox from 'components/BottomInsetBox';
 import Button from 'components/core/Button';
 import PageHeader from 'components/PageHeader';
-import { Image, StyleSheet } from 'react-native';
+import { PassportCamera, PassportCameraProps } from 'components/PassportCamera/PassportCamera';
 import IMAGES from 'constants/images';
-import { useOnboardingContext } from 'context/OnboardingProvider';
-import { mockData } from 'constants/mockData';
-import TextInput from 'components/core/TextInput';
+import useUserInfo from 'stores/userInfoStore';
 
 function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
-  const { onboardingDispatch } = useOnboardingContext();
-  const [showManualText, setShowManualText] = React.useState(false);
-  const [manualText, setManualText] = React.useState('');
+  const [isPressed, setIsPressed] = useState(false);
+  const store = useUserInfo();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,56 +23,78 @@ function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
     });
   }, []);
 
-  useEffect(() => {
-    onboardingDispatch.setPassportId(mockData.mockPassportId.id);
-  }, []);
-
-  function handleCameraOpen() {
-    console.log('showManualText');
-    if (showManualText) {
-      let text = manualText;
-      if (!text.includes('/n')) {
-        text = '.\n' + text;
+  const onPassportRead = useCallback<PassportCameraProps['onPassportRead']>(
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        // TODO: Add error handling here
+        return;
       }
-      onboardingDispatch.setPassportId(text);
-      // onboardingDispatch.setPassportId(mockData.mockPassportId.id);
-      navigation.navigate('PassportNfcRead');
-      return;
-    }
 
-    setShowManualText(true);
-  }
+      if (!result) {
+        console.error('No result from passport scan');
+        return;
+      }
+
+      const { birthDate, documentNumber, expiryDate } = result;
+
+      // const formattedDateOfBirth =
+      //   Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfBirth) : dateOfBirth;
+      // const formattedDateOfExpiry =
+      //   Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfExpiry) : dateOfExpiry;
+
+      store.update({
+        passportNumber: documentNumber,
+        dateOfBirth: birthDate,
+        dateOfExpiry: expiryDate,
+      });
+
+      navigation.navigate('PassportNfcRead');
+    },
+    [store, navigation]
+  );
+
+  // function handleCameraOpen() {
+  //   console.log('showManualText');
+  //   if (showManualText) {
+  //     let text = manualText;
+  //     if (!text.includes('/n')) {
+  //       text = '.\n' + text;
+  //     }
+  //     onboardingDispatch.setPassportId(text);
+  //     // onboardingDispatch.setPassportId(mockData.mockPassportId.id);
+  //     navigation.navigate('PassportNfcRead');
+  //     return;
+  //   }
+  // }
 
   return (
     <Box flex={1}>
-      <ScrollView>
-        <Box alignItems="center" mt={'xl'} gap={'l'} flex={1} justifyContent="center">
-          <Box>
-            <PageHeader
-              titleId="screens.passportIdScan.title"
-              descriptionId="screens.passportIdScan.description"
+      {isPressed ? (
+        <PassportCamera onPassportRead={onPassportRead} isMounted={isPressed} />
+      ) : (
+        <Box flex={1}>
+          <ScrollView>
+            <Box alignItems="center" mt={'xl'} gap={'l'} flex={1} justifyContent="center">
+              <Box>
+                <PageHeader
+                  titleId="screens.passportIdScan.title"
+                  descriptionId="screens.passportIdScan.description"
+                />
+              </Box>
+              <Image source={IMAGES.passportDrawing} style={styles.image} />
+            </Box>
+          </ScrollView>
+          <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
+            <Button
+              labelId="button.openCamera"
+              onPress={() => {
+                setIsPressed(true);
+              }}
             />
-          </Box>
-          <Image source={IMAGES.passportDrawing} style={styles.image} />
-          {showManualText && (
-            <TextInput
-              labelId="button.manualInput"
-              placeholderId="button.manualInput"
-              value={manualText}
-              onChangeText={setManualText}
-              hasError={false}
-            />
-          )}
+          </BottomInsetBox>
         </Box>
-      </ScrollView>
-      <BottomInsetBox alignItems="center" paddingHorizontal="m" gap="m">
-        <Button labelId="button.openCamera" onPress={handleCameraOpen} />
-        <Button
-          labelId={!showManualText ? 'button.manualInput' : 'button.proceed'}
-          variant="secondary"
-          onPress={handleCameraOpen}
-        />
-      </BottomInsetBox>
+      )}
     </Box>
   );
 }
