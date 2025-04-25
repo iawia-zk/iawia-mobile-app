@@ -1,5 +1,5 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { Image, Platform, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 import Box from 'components/core/Box';
 
@@ -36,17 +36,17 @@ function PassportIdScan({ navigation }: TNavigationProps<'PassportIdScan'>) {
         return;
       }
 
-      const { passportNumber, dateOfBirth, dateOfExpiry } = result;
+      const { birthDate, documentNumber, expiryDate } = result;
 
-      const formattedDateOfBirth =
-        Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfBirth) : dateOfBirth;
-      const formattedDateOfExpiry =
-        Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfExpiry) : dateOfExpiry;
+      // const formattedDateOfBirth =
+      //   Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfBirth) : dateOfBirth;
+      // const formattedDateOfExpiry =
+      //   Platform.OS === 'ios' ? formatDateToYYMMDD(dateOfExpiry) : dateOfExpiry;
 
       store.update({
-        passportNumber,
-        dateOfBirth: formattedDateOfBirth,
-        dateOfExpiry: formattedDateOfExpiry,
+        passportNumber: documentNumber,
+        dateOfBirth: birthDate,
+        dateOfExpiry: expiryDate,
       });
 
       navigation.navigate('PassportNfcRead');
