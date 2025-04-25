@@ -1,8 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { TOnboardingScreensParams } from 'screens/Onboarding/OnboardingNavigation.types';
-import { THomeScreensParams } from 'screens/Home/HomeNavigation.types';
+import { TOnboardingScreensParams } from 'screens/onboarding/OnboardingNavigation.types';
+import { THomeScreensParams } from 'screens/home/HomeNavigation.types';
 
 // import { TAccountsReceivableScreensParams } from 'screens/AccountsReceivable/AccountsReceivableNavigation.types';
 

@@ -1,17 +1,22 @@
-// @ts-ignore
 import PassportReader from 'react-native-passport-reader';
 import Config from 'react-native-config';
-import NfcManager from 'react-native-nfc-manager';
+import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 
-import extractMRZInfo from 'helpers/extractMrz';
 import DataSource from 'enums/DataSource';
 import { mockData } from 'constants/mockData';
 import { useOnboardingContext } from 'context/OnboardingProvider';
 
 import { PassportData } from './useNFC.types';
+import useUserInfo from 'stores/userInfoStore';
+
+interface Inputs {
+  passportNumber: string;
+  dateOfBirth: string;
+  dateOfExpiry: string;
+}
 
 function useNFC() {
-  const { onboardingState } = useOnboardingContext();
+  const { passportNumber, dateOfBirth, dateOfExpiry } = useUserInfo();
   const isMock = Config.DATA_SOURCE === DataSource.MOCK;
 
   console.log('isMock', isMock);
@@ -20,17 +25,17 @@ function useNFC() {
 
   async function readNFC(): Promise<PassportData | void> {
     try {
-      // !isMock &&
-      //   (await NfcManager.requestTechnology(NfcTech.Ndef, {
-      //     alertMessage: 'Place your passport',
-      //   }));
+      !isMock &&
+        (await NfcManager.requestTechnology(NfcTech.Ndef, {
+          alertMessage: 'Place your passport',
+        }));
 
       if (isMock) {
         await new Promise((resolve) => setTimeout(resolve, 3000));
       }
 
       // TODO: (serhat) implement platform check
-      const result = await scanAndroid();
+      const result = await scanAndroid({ passportNumber, dateOfBirth, dateOfExpiry });
 
       NfcManager.cancelTechnologyRequest();
       return result;
@@ -40,17 +45,13 @@ function useNFC() {
     }
   }
 
-  async function scanAndroid(): Promise<PassportData | void> {
-    const passportId = onboardingState.passportId ?? '';
-
-    const { documentNumber, birthDate, expiryDate } = extractMRZInfo(passportId);
-
+  async function scanAndroid(inputs: Inputs): Promise<PassportData | void> {
     try {
       if (!isMock) {
         const response = await PassportReader.scan({
-          documentNumber: documentNumber,
-          dateOfBirth: birthDate,
-          dateOfExpiry: expiryDate,
+          documentNumber: inputs.passportNumber,
+          dateOfBirth: inputs.dateOfBirth,
+          dateOfExpiry: inputs.dateOfExpiry,
         });
 
         return response;
@@ -61,7 +62,7 @@ function useNFC() {
       // TODO: (serhat) handle error
       console.log(e);
     }
-  }
+  };
 
   return {
     readNFC,
