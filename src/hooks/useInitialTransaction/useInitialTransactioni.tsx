@@ -1,6 +1,6 @@
 import { useWalletContext } from 'context/WalletProvider/WalletProvider';
 import { ZKType } from 'enums/ZKType';
-import { uploadFileToPinata } from 'helpers/pinataUpload';
+import { uploadFileToPinata } from 'helpers/ipfsService';
 import { TWalletData, TSnark } from 'context/WalletProvider/WalletProvider.types';
 import RNFS from 'react-native-fs';
 import { useState } from 'react';

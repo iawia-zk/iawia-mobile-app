@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
-import { PinataUploadResponse } from './pinataUpload.types';
+import { PinataUploadResponse } from './ipfsService.types';
 
 const PINATA_JWT = Config.PINATA_JWT;
 
@@ -38,6 +38,18 @@ export const uploadFileToPinata = async (file: any) => {
     if (axios.isAxiosError(error)) {
       console.error('Response data:', error.response?.data);
     }
+    return null;
+  }
+};
+
+export const getJsonFromIpfsByKey = async (key: string) => {
+  try {
+    const res = await fetch('https://gateway.pinata.cloud/ipfs/' + key);
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching JSON from IPFS:', error);
     return null;
   }
 };

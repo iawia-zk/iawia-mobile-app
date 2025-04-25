@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import storage, { STORAGE_KEYS } from 'helpers/storage';
 import { TTransaction, TTransactionDetails } from 'types/wallet';
 import { TWalletData } from 'context/WalletProvider/WalletProvider.types';
+
 class WalletService {
   private provider: JsonRpcProvider;
   private connectedWallet: HDNodeWallet | undefined;

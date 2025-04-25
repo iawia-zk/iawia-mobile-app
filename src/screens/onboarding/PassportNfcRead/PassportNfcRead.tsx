@@ -22,6 +22,7 @@ import { PassportData } from 'types/passportData';
 import { useFocusEffect } from '@react-navigation/native';
 import useNFC from 'hooks/useNFC';
 import useUserInfo from 'stores/userInfoStore';
+import { checkIfPassportIdExists } from 'helpers/uniquenessService/uniquenessService';
 
 const emitter =
   Platform.OS === 'android' ? new NativeEventEmitter(NativeModules.nativeModule) : null;
@@ -55,6 +56,17 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
   }, []);
 
   const onVerifyPress = useCallback(async () => {
+    //In this method, severeal things should be done:
+    // 1. Read NFC
+    // 2. If NFC read is successful, create a salty hash of the passport id
+    // 3. Search for the passport id in the ipfs database
+    // 4. If the passport id is found, get wallet address and public key (Phase 2, should be ignored for now)
+    // 5. If the passport id is not found, navigate to SecurityAttributes (This page is also be in phase 2 to fetch wallet)
+    //    Therefore, we should create wallet, and create a start generating ZK screen to send initial transaction
+    //    After the initial transaction is sent, we should store salty passport id hash in ipfs
+
+    console.log('handleNFCRead');
+    await checkIfPassportIdExists('mock_passport_id');
     if (isNfcEnabled) {
       setIsNfcSheetOpen(true);
 

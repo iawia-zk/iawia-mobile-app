@@ -1,6 +1,6 @@
 import Box from 'components/core/Box';
 import Button from 'components/core/Button';
-import { uploadFileToPinata } from 'helpers/pinataUpload';
+import { uploadFileToPinata } from 'helpers/ipfsService';
 import React, { useState } from 'react';
 import { Text, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
