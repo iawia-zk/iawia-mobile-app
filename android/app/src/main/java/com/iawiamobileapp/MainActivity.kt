@@ -1,5 +1,9 @@
 package com.iawiamobileapp
 
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.content.pm.ActivityInfo
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
@@ -19,4 +23,10 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    // Lock to portrait orientation
+    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+  }
 }
