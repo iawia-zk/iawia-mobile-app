@@ -1,12 +1,8 @@
 pragma circom 2.1.9;
 
-include "../utils/passport/disclose/disclose.circom";
-include "../utils/passport/disclose/proveCountryIsNotInList.circom";
-include "../utils/passport/ofac/ofac_name_dob.circom";
-include "../utils/passport/ofac/ofac_name_yob.circom";
-include "../utils/passport/ofac/ofac_passport_number.circom";
-include "../utils/passport/disclose/verify_commitment.circom";
-include "../utils/passport/date/isValid.circom";
+include "./passport/disclose/disclose.circom";
+
+include "./passport/date/isValid.circom";
 
 //TODO
 
@@ -71,35 +67,18 @@ template VC_AND_DISCLOSE() {
     disclose.selector_older_than <== selector_older_than;
     disclose.current_date <== current_date;
     disclose.majority <== majority;
-    disclose.ofac_passportno_smt_leaf_key <== ofac_passportno_smt_leaf_key;
-    disclose.ofac_passportno_smt_root <== ofac_passportno_smt_root;
-    disclose.ofac_passportno_smt_siblings <== ofac_passportno_smt_siblings;
-    disclose.ofac_namedob_smt_leaf_key <== ofac_namedob_smt_leaf_key;
-    disclose.ofac_namedob_smt_root <== ofac_namedob_smt_root;
-    disclose.ofac_namedob_smt_siblings <== ofac_namedob_smt_siblings;
-    disclose.ofac_nameyob_smt_leaf_key <== ofac_nameyob_smt_leaf_key;
-    disclose.ofac_nameyob_smt_root <== ofac_nameyob_smt_root;
-    disclose.ofac_nameyob_smt_siblings <== ofac_nameyob_smt_siblings;
-    disclose.selector_ofac <== selector_ofac;
-    disclose.forbidden_countries_list <== forbidden_countries_list;
-
+   
     signal output revealedData_packed[3] <== disclose.revealedData_packed;
 
-    var chunkLength = computeIntChunkLength(MAX_FORBIDDEN_COUNTRIES_LIST_LENGTH * 3);
-    signal output forbidden_countries_list_packed[chunkLength] <== disclose.forbidden_countries_list_packed;
 
     signal output nullifier <== Poseidon(2)([secret, scope]);
 }
 
 component main {
     public [
-        merkle_root,
-        ofac_passportno_smt_root,
-        ofac_namedob_smt_root,
-        ofac_nameyob_smt_root,
         scope,
         user_identifier,
         current_date,
         attestation_id
     ]
-} = VC_AND_DISCLOSE(33, 40, 64, 64, 64);
+} = VC_AND_DISCLOSE();

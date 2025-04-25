@@ -75,11 +75,11 @@ template verifyBits(A, B, P){
     scalarMult1.scalar <== mult.mod;
 
 
-    component scalarMult2 = EllipticCurveScalarMult(n, k, A, B, P, 4);
+    component scalarMult2 = EllipticCurveScalarMult( A, B, P, 4);
     scalarMult2.scalar <== mult2.mod;
     scalarMult2.in <== pubkey;
 
-    component add = EllipticCurveAdd(n, k, A, B, P);
+    component add = EllipticCurveAdd(A, B, P);
     add.in1 <== scalarMult1.out;
     add.in2 <== scalarMult2.out;
 
