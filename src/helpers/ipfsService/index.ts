@@ -1,0 +1,1 @@
+export { uploadFileToPinata } from './ipfsService';

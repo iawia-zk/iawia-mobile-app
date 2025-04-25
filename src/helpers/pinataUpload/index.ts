@@ -1,1 +1,0 @@
-export { uploadFileToPinata } from './pinataUpload';
