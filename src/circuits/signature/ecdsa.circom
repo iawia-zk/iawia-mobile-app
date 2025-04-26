@@ -1,8 +1,8 @@
 pragma circom  2.1.9;
 
-include "../../ec/curve.circom";
-include "../../ec/get.circom";
-include "../../bigInt/bigInt.circom";
+include "../ec/curve.circom";
+include "../ec/get.circom";
+include "../bigInt/bigInt.circom";
 
 template verifyBits(A, B, P){
 
@@ -18,7 +18,7 @@ template verifyBits(A, B, P){
     component bits2Num[k];
 
     for(var i = 0; i < k; i++){
-        bits2Num[i] = Bits2Num(n, k);
+        bits2Num[i] = Bits2Num(n);
         for(var j = 0; j < n; j++){
             bits2Num[i].in[n - 1 - j] <== hashed[i * n + j];
         }
@@ -33,22 +33,21 @@ template verifyBits(A, B, P){
         one[i] <== 0;
     }
 
-
     component getOrder = EllipticCurveGetOrder(n, k, A, B, P);
     signal order[k];
     order <== getOrder.order;
 
     component rangeChecks[2];
-    rangeChecks[0] = RangeCheck(n, k);
+    rangeChecks[0] = BigRangeCheck(n, k);
     rangeChecks[0].value <== signature[0];
-    rangeChecks[0].min <== one;
-    rangeChecks[0].max <== order;
+    rangeChecks[0].lowerBound <== one;
+    rangeChecks[0].upperBound <== order;
     rangeChecks[0].out === 1;
 
-    rangeChecks[1] = RangeCheck(n, k);
+    rangeChecks[1] = BigRangeCheck(n, k);
     rangeChecks[1].value <== signature[1];
-    rangeChecks[1].min <== one;
-    rangeChecks[1].max <== order;
+    rangeChecks[1].lowerBound <== one;
+    rangeChecks[1].upperBound <== order;
     rangeChecks[1].out === 1;
 
     signal sinv[k];
@@ -56,30 +55,30 @@ template verifyBits(A, B, P){
     component modInv = BigModInv(n,k);
 
     modInv.in <== signature[1];
-    modInv.mod <== order;
+    modInv.modulus <== order;
     modInv.out ==> sinv;
 
     component mult = BigMultModP(n, k, k, k);
     mult.in1 <== sinv;
     mult.in2 <== hashedChunked;
-    mult.mod <== order;
+    mult.modulus <== order;
 
     component mult2 = BigMultModP(n, k, k, k);
     mult2.in1 <== sinv;
     mult2.in2 <== signature[0];
-    mult2.mod <== order;
+    mult2.modulus <== order;
 
 
     //might be problematic
-    component scalarMult1 = EllipicCurveScalarGeneratorMult(n, k, A, B, P);
-    scalarMult1.scalar <== mult.mod;
+    component scalarMult1 = EllipticCurveScalarGeneratorMult(A, B, P);
+    scalarMult1.scalar <== mult.modulus;
 
 
-    component scalarMult2 = EllipticCurveScalarMult(n, k, A, B, P, 4);
-    scalarMult2.scalar <== mult2.mod;
+    component scalarMult2 = EllipticCurveScalarMult(A, B, P, 4);
+    scalarMult2.scalar <== mult2.modulus;
     scalarMult2.in <== pubkey;
 
-    component add = EllipticCurveAdd(n, k, A, B, P);
+    component add = EllipticCurveAdd(A, B, P);
     add.in1 <== scalarMult1.out;
     add.in2 <== scalarMult2.out;
 

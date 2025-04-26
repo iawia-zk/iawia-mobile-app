@@ -1,14 +1,7 @@
-pragma circom 2.1.6;
+pragma circom 2.1.9;
 
-include "./sha1/sha1.circom";
-include "./sha2/sha224/sha224HashChunks.circom";
-include "./sha2/sha256/sha256HashChunks.circom";
-include "./sha2/sha384/sha384HashChunks.circom";
-include "./sha2/sha512/sha512HashChunks.circom";
-include "./sha2/sha224/sha224HashBits.circom";
-include "./sha2/sha256/sha256HashBits.circom";
-include "./sha2/sha384/sha384HashBits.circom";
-include "./sha2/sha512/sha512HashBits.circom";
+include "./sha512HashChunks.circom";
+include "./sha512HashBits.circom";
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Here is secure implementation of sha-1 and sha-2 hash algoritms.
@@ -27,7 +20,7 @@ include "./sha2/sha512/sha512HashBits.circom";
 template ShaHashChunks(BLOCK_NUM){
 
     
-    BLOCK_SIZE = 1024;
+    var BLOCK_SIZE = 1024;
     
     signal input in[BLOCK_SIZE * BLOCK_NUM];
     signal output out[512];
@@ -42,10 +35,10 @@ template ShaHashChunks(BLOCK_NUM){
 template ShaHashBits(LEN){
 
 
-    BLOCK_SIZE = 1024;
+    var BLOCK_SIZE = 1024;
     
     signal input in[LEN];
-    signal output out[ALGO];
+    signal output out[512];
 
     
     component hash512 = Sha512HashBits(LEN);

@@ -24,6 +24,7 @@ DerivedData
 # Android/IntelliJ
 #
 build/
+!src/circuits/scripts/build
 .idea
 .gradle
 local.properties
@@ -81,4 +82,3 @@ android/app/.cxx
 .expo
 dist/
 web-build/
-assets/mock

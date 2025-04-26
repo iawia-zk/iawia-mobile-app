@@ -11,7 +11,7 @@ template Sha512HashBits(LEN) {
 
     signal output out[512];
 
-    component addPadding = ShaPadding(LEN, 1024);
+    component addPadding = ShaPadding(LEN);
     addPadding.in <== in;
 
     var BLOCK_NUM = ((LEN + 1 + 128) + 1024 - 1) \ 1024;

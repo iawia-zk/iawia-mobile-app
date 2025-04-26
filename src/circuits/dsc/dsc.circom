@@ -5,7 +5,6 @@ include "../hasher/shaBytes/sha512Bytes.circom";
 include "circomlib/circuits/comparators.circom";
 include "../hasher/hash.circom";
 include "circomlib/circuits/poseidon.circom";
-include "@zk-kit/binary-merkle-root.circom/src/binary-merkle-root.circom";
 include "../passport/customHashers.circom";
 include "../passport/signatureAlgorithm.circom";
 include "../passport/signatureVerifier.circom";
@@ -44,8 +43,7 @@ template DSC() {
     assert(MAX_CSCA_LENGTH % 64 == 0);
     assert(MAX_DSC_LENGTH % 64 == 0);
 
-    var kLengthFactor = 2;
-    var kScaled = k_csca * kLengthFactor;
+    var kScaled = k_csca * 2;
     var hashLength = 512;
 
     var MAX_CSCA_PUBKEY_LENGTH = n_csca * kScaled / 8;
@@ -98,8 +96,6 @@ template DSC() {
     // compute leaf in the CSCA Merkle tree and verify inclusion
     signal csca_hash <== PackBytesAndPoseidon(MAX_CSCA_LENGTH)(raw_csca);
     signal csca_tree_leaf <== Poseidon(2)([csca_hash, raw_csca_actual_length]);
-    signal computed_merkle_root <== BinaryMerkleRoot(nLevels)(csca_tree_leaf, nLevels, path, siblings);
-    merkle_root === computed_merkle_root;
 
     var prefixLength = 33;
     var suffixLength = 0;
@@ -118,7 +114,7 @@ template DSC() {
     CheckPubkeyPosition(
         prefixLength,
         MAX_CSCA_PUBKEY_LENGTH,
-        suffixLength,
+        suffixLength
     )(
         csca_pubKey_with_prefix_and_suffix,
         csca_pubKey_actual_size
@@ -132,7 +128,7 @@ template DSC() {
 
     // check if the CSCA public key is the same as the one in the certificate
     // If we end up adding the pubkey in the CSCA leaf, we'll be able to remove this check
-    CheckPubkeysEqual(n_csca, kScaled, kLengthFactor, MAX_CSCA_PUBKEY_LENGTH)(
+    CheckPubkeysEqual(n_csca, kScaled, MAX_CSCA_PUBKEY_LENGTH)(
         csca_pubKey,
         extracted_csca_pubKey,
         csca_pubKey_actual_size
@@ -141,7 +137,7 @@ template DSC() {
     // verify DSC signature
     // raw_dsc_padded_length is constrained because an incorrect one
     // would yield hashes that have not been signed
-    signal hashedCertificate[hashLength] <== ShaBytesDynamic(hashLength, MAX_DSC_LENGTH)(raw_dsc, raw_dsc_padded_length);
+    signal hashedCertificate[hashLength] <== Sha512Bytes(MAX_DSC_LENGTH)(raw_dsc, raw_dsc_padded_length);
     SignatureVerifier()(hashedCertificate, csca_pubKey, signature);
     
     // generate DSC leaf as poseidon(dsc_hash_with_actual_length, csca_tree_leaf)

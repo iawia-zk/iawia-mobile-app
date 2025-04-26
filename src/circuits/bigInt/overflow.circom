@@ -1,6 +1,6 @@
 pragma circom  2.1.9;
 
-include "bigIntComparators.circom";
+include "comparators.circom";
 include "helpers.circom";
 include "bigIntFunc.circom";
 

@@ -1,10 +1,9 @@
 pragma circom 2.1.9;
 
-include "@openpassport/zk-email-circuits/utils/array.circom";
-include "@openpassport/zk-email-circuits/utils/bytes.circom";
-include "../crypto/bitify/bytes.circom";
-include "../crypto/hasher/shaBytes/shaBytesDynamic.circom";
-include "../crypto/hasher/hash.circom";
+include "@zk-email/circuits/utils/array.circom";
+include "@zk-email/circuits/utils/bytes.circom";
+include "../bitify/bytes.circom";
+include "../hasher/hash.circom";
 include "./signatureAlgorithm.circom";
 include "./signatureVerifier.circom";
 
@@ -71,7 +70,7 @@ template PassportVerifier(DG_HASH_ALGO, ECONTENT_HASH_ALGO, MAX_ECONTENT_PADDED_
     }
 
     // compute hash of eContent
-    signal eContentShaBits[ECONTENT_HASH_ALGO] <== ShaBytesDynamic(ECONTENT_HASH_ALGO, MAX_ECONTENT_PADDED_LEN)(eContent, eContent_padded_length);
+    signal eContentShaBits[ECONTENT_HASH_ALGO] <== Sha512Bytes(MAX_ECONTENT_PADDED_LEN)(eContent, eContent_padded_length);
     signal output eContentShaBytes[ECONTENT_HASH_ALGO_BYTES] <== BitsToBytesArray(ECONTENT_HASH_ALGO)(eContentShaBits);
 
     // assert eContent hash matches the one in signedAttr
@@ -81,7 +80,7 @@ template PassportVerifier(DG_HASH_ALGO, ECONTENT_HASH_ALGO, MAX_ECONTENT_PADDED_
     }
 
     // compute hash of signedAttr
-    signal signedAttrShaBits[SIGNED_ATTR_HASH_ALGO] <== ShaBytesDynamic(SIGNED_ATTR_HASH_ALGO, MAX_SIGNED_ATTR_PADDED_LEN)(signed_attr, signed_attr_padded_length);
+    signal signedAttrShaBits[SIGNED_ATTR_HASH_ALGO] <== Sha512Bytes(MAX_SIGNED_ATTR_PADDED_LEN)(signed_attr, signed_attr_padded_length);
     signal output signedAttrShaBytes[SIGNED_ATTR_HASH_ALGO_BYTES] <== BitsToBytesArray(SIGNED_ATTR_HASH_ALGO)(signedAttrShaBits);
 
     // verify passport signature

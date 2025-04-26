@@ -3,7 +3,7 @@ pragma circom 2.1.9;
 include "common.circom";
 include "sha512InitialValue.circom";
 include "sha512Schedule.circom";
-include "@openpassport/zk-email-circuits/utils/array.circom";
+include "@zk-email/circuits/utils/array.circom";
 include "sha512Rounds.circom";
 
 template Sha512HashChunks(MAX_BLOCKS) {

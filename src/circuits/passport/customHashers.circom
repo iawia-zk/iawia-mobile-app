@@ -1,7 +1,7 @@
 pragma circom 2.1.9;
 include "../bigInt/bigIntFunc.circom";
 include "circomlib/circuits/poseidon.circom";
-include "@openpassport/zk-email-circuits/utils/bytes.circom";
+include "@zk-email/circuits/utils/bytes.circom";
 include "circomlib/circuits/comparators.circom";
 
 

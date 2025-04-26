@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@zk-email/circuits": "^6.3.3-nightly-20250214"
+    "@zk-email/circuits": "^6.3.3-nightly-20250214",
+    "circomlib": "^2.0.5",
+    "snarkjs": "^0.7.5"
   }
 }

@@ -1,7 +1,7 @@
 pragma circom 2.1.9;
 
-include "../crypto/bitify/bytes.circom";
-include "../crypto/bitify/split.circom";
+include "../bitify/bytes.circom";
+include "../bitify/split.circom";
 
 
 template CheckPubkeysEqual(n, kScaled, MAX_CSCA_PUBKEY_LENGTH) {

@@ -1,7 +1,7 @@
 pragma circom 2.1.9;
 
 include "../bigInt/bigIntFunc.circom";
-include "../bigInt/bigint.circom";
+include "../bigInt/bigInt.circom";
 include "../bigInt/overflow.circom";
 include "../bigInt/helpers.circom";
 include "./get.circom";
@@ -36,7 +36,7 @@ template PointOnCurve(A,B,P){
     ax.in2 <== A;
 
     // check if y^2 - (x^3 + a * x + b) == 0  mod p
-    compare isZeroCongruent = BigIntIsZeroModP(n, n * 3 + 2 * k, k * 3 - 2, k * 3, k);
+    component isZeroCongruent = BigIntIsZeroModP(n, n * 3 + 2 * k, k * 3 - 2, k * 3, k);
 
     for(var i = 0; i < k; i++){
         isZeroCongruent.in[i] <== cube.out[i] + ax.out[i] - ySquare.out[i] + B[i];
@@ -80,8 +80,8 @@ template PointOnTangent(A,B,P){
     rightMult.in2 <== bigSub.out;
 
     component scalar2 = ScalarMultOverflow(k);
-    scalarMult2.in <== in1[1];
-    scalarMult2.scalar <== 2;
+    scalar2.in <== in1[1];
+    scalar2.scalar <== 2;
 
     // Compute y3 + y
     component bigAdd2 = BigAddOverflow(n, k, k);
@@ -180,13 +180,13 @@ template EllipticCurvePrecomputePipinger(A, B, P, WINDOW_SIZE){
     
     for (var i = 2; i < PRECOMPUTE_NUMBER; i++){
         if (i % 2 == 0){
-            doublers[i \ 2 - 1] = EllipticCurveDouble(n, k, A, B, P);
+            doublers[i \ 2 - 1] = EllipticCurveDouble(A, B, P);
             doublers[i \ 2 - 1].in <== out[i \ 2];
             doublers[i \ 2 - 1].out ==> out[i];
             
         }
         else {
-            adders[i \ 2 - 1] = EllipticCurveAdd(n, k, A, B, P);
+            adders[i \ 2 - 1] = EllipticCurveAdd(A, B, P);
             adders[i \ 2 - 1].in1 <== out[1];
             adders[i \ 2 - 1].in2 <== out[i - 1];
             adders[i \ 2 - 1].out ==> out[i];
@@ -220,11 +220,11 @@ template EllipticCurveDouble( A, B, P){
     }
     
     // Check if the resulting point lies on the tangent
-    component onTangentCheck = PointOnTangent(n, k, A, B, P);
+    component onTangentCheck = PointOnTangent(A, B, P);
     onTangentCheck.in1 <== in;
     onTangentCheck.in2 <== out;
     // Check if the resulting point lies on the curve
-    component onCurveCheck = PointOnCurve(n, k, A, B, P);
+    component onCurveCheck = PointOnCurve(A, B, P);
     onCurveCheck.in <== out;
 
 }
@@ -255,11 +255,11 @@ template EllipticCurveAdd(A, B, P){
     }
     
     // Check if the resulting point lies on the elliptic curve
-    component onCurveCheck = PointOnCurve(n, k, A, B, P);
+    component onCurveCheck = PointOnCurve(A, B, P);
     onCurveCheck.in <== out;
     
     // Check if the points (x1, y1), (x2, y2), and (x3, -y3) are collinear
-    component onLineCheck = PointOnLine(n, k, A, B, P);
+    component onLineCheck = PointOnLine(A, B, P);
     onLineCheck.in1 <== in1;
     onLineCheck.in2 <== in2;
     onLineCheck.in3 <== out;
@@ -267,13 +267,14 @@ template EllipticCurveAdd(A, B, P){
 }
 
 template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
-    
+    var n = 66;
+    var k = 8;
     signal input in[2][k];
     signal input scalar[k];
     
     signal output out[2][k];
     
-    component precompute = EllipticCurvePrecomputePipinger(n, k, A, B, P, WINDOW_SIZE);
+    component precompute = EllipticCurvePrecomputePipinger(A, B, P, WINDOW_SIZE);
     precompute.in <== in;
     
     
@@ -329,7 +330,7 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
         
         if (i != 0){
             for (var j = 0; j < WINDOW_SIZE; j++){
-                doublers[i + j - WINDOW_SIZE] = EllipticCurveDouble(n, k, A, B, P);
+                doublers[i + j - WINDOW_SIZE] = EllipticCurveDouble(A, B, P);
                 
                 // if input == 0, double gen, result - zero
                 // if input != 0, double res window times, result - doubling result
@@ -384,7 +385,7 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
             resultingPoints[i \ WINDOW_SIZE + 1] <== additionPoints[i \ WINDOW_SIZE];
             
         } else {
-            adders[i \ WINDOW_SIZE - 1] = EllipticCurveAdd(n, k, A, B, P);
+            adders[i \ WINDOW_SIZE - 1] = EllipticCurveAdd(A, B, P);
             adders[i \ WINDOW_SIZE - 1].in1 <== doublers[i - 1].out;
             adders[i \ WINDOW_SIZE - 1].in2 <== additionPoints[i \ WINDOW_SIZE];
             
@@ -417,4 +418,205 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
         }
     }
     out <== resultingPoints[ADDERS_NUMBER];
+}
+
+/// @title EllipticCurveScalarGeneratorMult
+/// @notice Calculates the elliptic curve scalar multiplication: G * scalar
+/// @dev This function works for multiple elliptic curve types. The generator power tables for each curve are pre-generated. It performs the scalar multiplication in chunks using the specified chunk size and number of chunks.
+/// @param n The size of each chunk used for scalar multiplication. 
+/// @param k The number of chunks used for scalar multiplication. 
+/// @param A The curve parameter A (used for curve equation: y^2 = x^3 + Ax + B).
+/// @param B The curve parameter B (used for curve equation: y^2 = x^3 + Ax + B).
+/// @param P The elliptic curve parameters [P0, P1, P2, P3] defining the curve.
+/// @return out The resulting elliptic curve point after multiplying the generator G with the scalar.
+template EllipticCurveScalarGeneratorMult(A, B, P){
+    var n = 66;
+    var k = 8;
+    signal input scalar[k];
+    
+    signal output out[2][k];
+    
+    var STRIDE = 8;
+    var parts = k * n \ STRIDE;
+    
+    var powers[parts][2 ** STRIDE][2][k];
+    
+    
+    
+    if (P[0] == 73786976294838206463 && P[1] == 73786976294838206463 && P[2] == 73786976294838206463 && P[3] == 73786976294838206463 && P[4] == 73786976294838206463 && P[5] == 73786976294838206463 && P[6] == 73786976294838206463 && P[7] == 576460752303423487){
+        powers = get_g_pow_stride8_table_p521(n, k);
+    }
+    
+    
+    
+    
+    component num2bits[k];
+    for (var i = 0; i < k; i++){
+        num2bits[i] = Num2Bits(n);
+        num2bits[i].in <== scalar[i];
+    }
+    component bits2num[parts];
+    for (var i = 0; i < parts; i++){
+        bits2num[i] = Bits2Num(STRIDE);
+        for (var j = 0; j < STRIDE; j++){
+            bits2num[i].in[j] <== num2bits[(i * STRIDE + j) \ n].out[(i * STRIDE + j) % n];
+        }
+    }
+
+    component getDummy = EllipticCurveGetDummy(n, k, A, B, P);
+    component getSecondDummy = EllipticCurveDouble( A, B, P);
+    getSecondDummy.in <== getDummy.dummyPoint;
+
+    component equal[parts][2 ** STRIDE];
+    signal resultCoordinateComputation[parts][2 ** STRIDE][2][k];
+    for (var i = 0; i < parts; i++){
+        for (var j = 0; j < 2 ** STRIDE; j++){
+            equal[i][j] = IsEqual();
+            equal[i][j].in[0] <== j;
+            equal[i][j].in[1] <== bits2num[i].out;
+            
+            if (j == 0 && i % 2 == 0){
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][0][axis_idx] <== equal[i][j].out * getDummy.dummyPoint[0][axis_idx];
+                }
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][1][axis_idx] <== equal[i][j].out * getDummy.dummyPoint[1][axis_idx];
+                }
+            }
+            if (j == 0 && i % 2 == 1){
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][0][axis_idx] <== equal[i][j].out * getSecondDummy.out[0][axis_idx];
+                }
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][1][axis_idx] <== equal[i][j].out * getSecondDummy.out[1][axis_idx];
+                }
+            }
+            if (j != 0) {
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][0][axis_idx] <== equal[i][j].out * powers[i][j][0][axis_idx];
+                }
+                for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                    resultCoordinateComputation[i][j][1][axis_idx] <== equal[i][j].out * powers[i][j][1][axis_idx];
+                }
+            }
+        }
+    }
+    
+    component getSumOfNElements[parts][2][k];
+    for (var i = 0; i < parts; i++){
+        for (var j = 0; j < 2; j++){
+            for (var axis_idx = 0; axis_idx < k; axis_idx++){
+                getSumOfNElements[i][j][axis_idx] = GetSumOfNElements(2 ** STRIDE);
+                for (var stride_idx = 0; stride_idx < 2 ** STRIDE; stride_idx++){
+                    getSumOfNElements[i][j][axis_idx].in[stride_idx] <== resultCoordinateComputation[i][stride_idx][j][axis_idx];
+                }
+            }
+        }
+    }
+    
+    signal additionPoints[parts][2][k];
+    for (var part_idx = 0; part_idx < parts; part_idx++){
+        for (var i = 0; i < 2; i++){
+            for (var j = 0; j < k; j++){
+                additionPoints[part_idx][i][j] <== getSumOfNElements[part_idx][i][j].out;
+            }
+        }
+    }
+    
+    component adders[parts - 1];
+
+    component isFirstDummyLeft[parts - 1];
+    component isSecondDummyLeft[parts - 1];
+    
+    component isFirstDummyRight[parts - 1];
+    component isSecondDummyRight[parts - 1];
+    
+    
+    signal resultingPointsLeft[parts][2][k];
+    signal resultingPointsLeft2[parts][2][k];
+    signal resultingPointsRight[parts][2][k];
+    signal resultingPointsRight2[parts][2][k];
+    signal resultingPoints[parts][2][k];
+    
+    component switcherLeft[parts][2][k];
+    component switcherRight[parts][2][k];
+    
+    
+    for (var i = 0; i < parts - 1; i++){
+        adders[i] = EllipticCurveAdd( A, B, P);
+
+        isFirstDummyLeft[i] = IsEqual();
+        isFirstDummyLeft[i].in[0] <== getDummy.dummyPoint[0][0];
+        isSecondDummyLeft[i] = IsEqual();
+        isSecondDummyLeft[i].in[0] <== getSecondDummy.out[0][0];
+
+        isFirstDummyRight[i] = IsEqual();
+        isFirstDummyRight[i].in[0] <== getDummy.dummyPoint[0][0];
+        isSecondDummyRight[i] = IsEqual();
+        isSecondDummyRight[i].in[0] <== getSecondDummy.out[0][0];
+
+        
+        
+        if (i == 0){
+            isFirstDummyLeft[i].in[1] <== additionPoints[i][0][0];
+            isSecondDummyLeft[i].in[1] <== additionPoints[i][0][0];
+            isFirstDummyRight[i].in[1] <== additionPoints[i + 1][0][0];
+            isSecondDummyRight[i].in[1] <== additionPoints[i + 1][0][0];
+            adders[i].in1 <== additionPoints[i];
+            adders[i].in2 <== additionPoints[i + 1];
+               
+            // 0 0 -> adders
+            // 0 1 -> left
+            // 1 0 -> right
+            // 1 1 -> right
+            for (var axis_idx = 0; axis_idx < 2; axis_idx++){
+                for (var j = 0; j < k; j++){
+                    
+                    switcherRight[i][axis_idx][j] = Switcher();
+                    switcherRight[i][axis_idx][j].bool <== isSecondDummyRight[i].out + isFirstDummyRight[i].out;
+                    switcherRight[i][axis_idx][j].in[0] <== adders[i].out[axis_idx][j];
+                    switcherRight[i][axis_idx][j].in[1] <== additionPoints[i][axis_idx][j];
+                    
+                    switcherLeft[i][axis_idx][j] = Switcher();
+                    switcherLeft[i][axis_idx][j].bool <== isSecondDummyLeft[i].out + isFirstDummyLeft[i].out;
+                    switcherLeft[i][axis_idx][j].in[0] <== additionPoints[i + 1][axis_idx][j];
+                    switcherLeft[i][axis_idx][j].in[1] <== switcherRight[i][axis_idx][j].out[0];
+                    
+                    resultingPoints[i][axis_idx][j] <== switcherLeft[i][axis_idx][j].out[1];
+                }
+            }
+            
+        } else {
+            isFirstDummyLeft[i].in[1] <== resultingPoints[i - 1][0][0];
+            isSecondDummyLeft[i].in[1] <== resultingPoints[i - 1][0][0];
+            isFirstDummyRight[i].in[1] <== additionPoints[i + 1][0][0];
+            isSecondDummyRight[i].in[1] <== additionPoints[i + 1][0][0];
+
+            adders[i].in1 <== resultingPoints[i - 1];
+            adders[i].in2 <== additionPoints[i + 1];
+            
+            // 0 0 -> adders
+            // 0 1 -> left
+            // 1 0 -> right
+            // 1 1 -> right
+            for (var axis_idx = 0; axis_idx < 2; axis_idx++){
+                for (var j = 0; j < k; j++){
+                    
+                    switcherRight[i][axis_idx][j] = Switcher();
+                    switcherRight[i][axis_idx][j].bool <== isSecondDummyRight[i].out + isFirstDummyRight[i].out;
+                    switcherRight[i][axis_idx][j].in[0] <== adders[i].out[axis_idx][j];
+                    switcherRight[i][axis_idx][j].in[1] <== resultingPoints[i - 1][axis_idx][j];
+                    
+                    switcherLeft[i][axis_idx][j] = Switcher();
+                    switcherLeft[i][axis_idx][j].bool <== isSecondDummyLeft[i].out + isFirstDummyLeft[i].out;
+                    switcherLeft[i][axis_idx][j].in[0] <== additionPoints[i + 1][axis_idx][j];
+                    switcherLeft[i][axis_idx][j].in[1] <== switcherRight[i][axis_idx][j].out[0];
+                    
+                    resultingPoints[i][axis_idx][j] <== switcherLeft[i][axis_idx][j].out[1];
+                }
+            }
+        }
+    }
+    out <== resultingPoints[parts - 2];
+    
 }

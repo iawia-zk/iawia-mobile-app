@@ -2,7 +2,7 @@ pragma circom 2.1.9;
 
 
 include "../signature/ecdsaVerifier.circom";
-include "@openpassport/zk-email-circuits/utils/bytes.circom";
+include "@zk-email/circuits/utils/bytes.circom";
 
 template SignatureVerifier() {
     var n = 66;

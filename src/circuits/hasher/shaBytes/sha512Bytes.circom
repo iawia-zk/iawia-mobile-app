@@ -2,7 +2,7 @@ pragma circom 2.1.9;
 
 include "circomlib/circuits/bitify.circom";
 include "circomlib/circuits/comparators.circom";
-include "../../sha512HashChunks.circom";
+include "../sha512HashChunks.circom";
 
 template Sha512Bytes(maxByteLength) {
     signal input paddedIn[maxByteLength];
