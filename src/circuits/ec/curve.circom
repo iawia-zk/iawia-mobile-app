@@ -187,6 +187,7 @@ template EllipticCurvePrecomputePipinger(A, B, P, WINDOW_SIZE){
         }
         else {
             adders[i \ 2 - 1] = EllipticCurveAdd(A, B, P);
+
             adders[i \ 2 - 1].in1 <== out[1];
             adders[i \ 2 - 1].in2 <== out[i - 1];
             adders[i \ 2 - 1].out ==> out[i];
@@ -618,5 +619,4 @@ template EllipticCurveScalarGeneratorMult(A, B, P){
         }
     }
     out <== resultingPoints[parts - 2];
-    
 }

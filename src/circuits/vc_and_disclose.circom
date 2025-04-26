@@ -70,7 +70,6 @@ template VC_AND_DISCLOSE() {
 
     signal output revealedData_packed[3] <== disclose.revealedData_packed;
 
-
     signal output nullifier <== Poseidon(2)([secret, scope]);
 }
 
