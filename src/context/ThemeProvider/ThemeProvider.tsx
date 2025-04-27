@@ -59,9 +59,9 @@ function ThemeProvider({ children }: TChildrenOnly): ReactElement {
 
   return (
     <themeContext.Provider value={value}>
-      <ReStyleThemeProvider theme={getColorsByTheme(getThemeValue() as Theme)}>
+      <ReStyleThemeProvider theme={getColorsByTheme(Theme.DARK)}>
         <StatusBar
-          barStyle={getStatusBarStyleByTheme(getThemeValue() as Theme)}
+          barStyle={getStatusBarStyleByTheme(Theme.DARK)}
           backgroundColor="transparent"
           translucent
         />

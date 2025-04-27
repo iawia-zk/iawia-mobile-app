@@ -24,6 +24,7 @@ import PassportIdScan from './onboarding/PassportIdScan';
 import PassportCamera from './onboarding/PassportCamera';
 import getDeviceLanguage from 'helpers/deviceLanguage';
 import PassportNfcRead from './onboarding/PassportNfcRead';
+import OnboardingResult from './onboarding/OnboardingResult';
 import SecurityAttributes from './onboarding/SecurityAttributes';
 import History from './home/History';
 import ZeroKnowledgeProof from './home/ZeroKnowledgeProof';
@@ -59,7 +60,7 @@ function AppNavigation() {
   async function handleAppInitialNavigation() {
     const walletPhrase = await storage.readStorage(STORAGE_KEYS.WALLET_PHRASE);
 
-    if (walletPhrase) {
+    if (!walletPhrase) {
       navigationDispatch.setInitialRouteName('Wallet');
       return;
     }
@@ -112,6 +113,14 @@ function AppNavigation() {
           options={{
             headerTitle: NavigationHeaderEmptyView,
             headerLeft: NavigationHeaderBackButton,
+          }}
+        />
+        <RootStack.Screen
+          name="OnboardingResult"
+          component={OnboardingResult}
+          options={{
+            headerTitle: NavigationHeaderEmptyView,
+            headerLeft: NavigationHeaderEmptyView,
           }}
         />
         <RootStack.Screen

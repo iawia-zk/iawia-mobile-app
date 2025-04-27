@@ -104,6 +104,8 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
           console.error('Passport Parsed Failed:', e);
           return;
         }
+
+        navigation.navigate('OnboardingResult');
       } catch (e: any) {
         // const scanDurationSeconds = ((Date.now() - scanStartTime) / 1000).toFixed(2);
         console.error('NFC Scan Unsuccessful:', e);

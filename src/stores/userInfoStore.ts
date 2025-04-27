@@ -1,4 +1,3 @@
-import { DEFAULT_DOB, DEFAULT_DOE, DEFAULT_PNUMBER } from '@env';
 import { create } from 'zustand';
 
 interface UserState {
@@ -10,9 +9,9 @@ interface UserState {
 }
 
 const useUserInfo = create<UserState>((set, get) => ({
-  passportNumber: DEFAULT_PNUMBER ?? '',
-  dateOfBirth: DEFAULT_DOB ?? '',
-  dateOfExpiry: DEFAULT_DOE ?? '',
+  passportNumber: '',
+  dateOfBirth: '',
+  dateOfExpiry: '',
 
   update: (patch) => {
     set({
