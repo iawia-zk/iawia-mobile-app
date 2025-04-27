@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import { PassportCameraProps } from 'components/PassportCamera/PassportCamera';
-import { RCTFragment } from 'components/PassportCamera/RctFragment';
 import extractMRZInfo from 'helpers/extractMrz';
 import { NativeSyntheticEvent, PixelRatio, Platform, requireNativeComponent } from 'react-native';
-import { RCTPassportOCRViewManagerProps } from '../PassportCamera.types';
+import { RCTPassportOCRViewManagerProps, TNativeCameraProps } from '../PassportCamera.types';
 import { assert } from 'helpers/assertions';
+import RCTFragment from './RctFragment';
+import { MrzResult } from 'helpers/extractMrz/extractMrz.types';
 
 const RCTPassportOCRViewNativeComponent = Platform.select({
   ios: requireNativeComponent('PassportOCRView'),
@@ -16,7 +16,7 @@ assert(
   'PassportOCRViewManager not registered for this platform'
 );
 
-function NativeCamera({ onPassportRead, isMounted }: PassportCameraProps) {
+function NativeCamera({ onPassportRead, isMounted }: TNativeCameraProps) {
   const onError = useCallback(
     (
       event: NativeSyntheticEvent<{
@@ -40,13 +40,7 @@ function NativeCamera({ onPassportRead, isMounted }: PassportCameraProps) {
   const _onPassportRead = useCallback(
     (
       event: NativeSyntheticEvent<{
-        data:
-          | string
-          | {
-              documentNumber: string;
-              expiryDate: string;
-              birthDate: string;
-            };
+        data: string | MrzResult;
       }>
     ) => {
       if (!isMounted) {
