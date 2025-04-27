@@ -10,7 +10,7 @@ OUTPUT_DIR="build/${CIRCUIT_TYPE}"
 # format: name:poweroftau:build_flag
 CIRCUITS=(
     # ECDSA circuits
-    "main_component:21:true"
+    "main_component:24:true"
 )
 
 build_circuits "$CIRCUIT_TYPE" "$OUTPUT_DIR" "${CIRCUITS[@]}" 

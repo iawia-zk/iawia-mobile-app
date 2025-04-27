@@ -4,6 +4,7 @@ include "@zk-email/circuits/utils/array.circom";
 include "@zk-email/circuits/utils/bytes.circom";
 include "../bitify/bytes.circom";
 include "../hasher/hash.circom";
+include "../hasher/shaBytes/sha512Bytes.circom";
 include "./signatureAlgorithm.circom";
 include "./signatureVerifier.circom";
 
@@ -60,7 +61,7 @@ template PassportVerifier(DG_HASH_ALGO, ECONTENT_HASH_ALGO, MAX_ECONTENT_PADDED_
 
     // compute hash of DG1
     signal dg1Bits[93 * 8] <== BytesToBitsArray(93)(dg1);
-    signal dg1ShaBits[DG_HASH_ALGO] <== ShaHashBits(93 * 8, DG_HASH_ALGO)(dg1Bits);
+    signal dg1ShaBits[DG_HASH_ALGO] <== ShaHashBits(93 * 8)(dg1Bits);
     signal dg1ShaBytes[DG_HASH_ALGO_BYTES] <== BitsToBytesArray(DG_HASH_ALGO)(dg1ShaBits);
 
     // assert DG1 hash matches the one in eContent

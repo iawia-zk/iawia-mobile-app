@@ -43,9 +43,7 @@ build_circuit() {
     
     # Set circuit path based on CIRCUIT_TYPE
     local CIRCUIT_PATH
-    # if [ "$CIRCUIT_TYPE" = "register" ] || [ "$CIRCUIT_TYPE" = "dsc" ]; then
-    #     CIRCUIT_PATH="circuits/${CIRCUIT_TYPE}/instances/${CIRCUIT_NAME}.circom"
-    if [ "$CIRCUIT_TYPE" = "dsc" ]; then
+    if [ "$CIRCUIT_TYPE" = "register" ] || [ "$CIRCUIT_TYPE" = "dsc" ]; then
         CIRCUIT_PATH="./${CIRCUIT_TYPE}/${CIRCUIT_NAME}.circom"
     else
         CIRCUIT_PATH="./${CIRCUIT_NAME}.circom"
@@ -55,7 +53,7 @@ build_circuit() {
     circom ${CIRCUIT_PATH} \
         -l ./node_modules \
         -l ./node_modules/circomlib/circuits \
-        --r1cs --O1 --wasm -c \
+        --r1cs --O2 --wasm -c \
         --output ${OUTPUT_DIR}/${CIRCUIT_NAME}/
 
     echo -e "${BLUE}Building zkey${NC}"
@@ -65,7 +63,7 @@ build_circuit() {
     
     NODE_OPTIONS="--max-old-space-size=40960" yarn snarkjs groth16 setup \
         ${OUTPUT_DIR}/${CIRCUIT_NAME}/${CIRCUIT_NAME}.r1cs \
-        ${cwd}/build/powersOfTau28_hez_final_21.ptau \
+        ${cwd}/build/powersOfTau28_hez_final_${POWEROFTAU}.ptau \
         ${OUTPUT_DIR}/${CIRCUIT_NAME}/${CIRCUIT_NAME}.zkey
 
     # Generate and contribute random string

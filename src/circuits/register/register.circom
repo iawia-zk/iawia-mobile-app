@@ -5,7 +5,7 @@ include "../passport/date/isValid.circom";
 include "circomlib/circuits/poseidon.circom";
 include "../passport/passportVerifier.circom";
 include "../passport/constants.circom";
-include "../bitify/splitWordsToBytes.circom";
+include "../bitify/split.circom";
 include "../bitify/bytes.circom";
 include "../passport/checkPubkeysEqual.circom";
 include "../passport/checkPubkeyPosition.circom";
@@ -110,7 +110,7 @@ template REGISTER(
     CheckPubkeyPosition(
         prefixLength,
         MAX_DSC_PUBKEY_LENGTH,
-        suffixLength,
+        suffixLength
     )(
         pubkey_with_prefix_and_suffix,
         dsc_pubKey_actual_size
@@ -123,7 +123,7 @@ template REGISTER(
     }
 
     // check if the DSC public key is the same as the one in the certificate
-    CheckPubkeysEqual(n, kScaled, kLengthFactor, MAX_DSC_PUBKEY_LENGTH)(
+    CheckPubkeysEqual(n, kScaled, MAX_DSC_PUBKEY_LENGTH)(
         pubKey_dsc,
         extracted_dsc_pubKey,
         dsc_pubKey_actual_size
@@ -157,6 +157,6 @@ template REGISTER(
         secret,
         attestation_id,
         dg1_packed_hash,
-        eContent_shaBytes_packed_hash,
+        eContent_shaBytes_packed_hash
     ]);
 }
