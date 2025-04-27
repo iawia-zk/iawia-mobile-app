@@ -1,5 +1,7 @@
 pragma circom 2.1.9;
-include "./bigint_func.circom";
+
+include "bigint_func.circom";
+include "@zk-email/circuits/lib/bigint-func.circom";
 
 function splitOverflowedRegister_dl(m, n, in) {
     var out[200];

@@ -1,8 +1,8 @@
 pragma circom 2.1.9;
 
-include "./passport/disclose/disclose.circom";
-
-include "./passport/date/isValid.circom";
+include "circomlib/circuits/poseidon.circom";
+include "../passport/disclose/disclose.circom";
+include "../passport/date/isValid.circom";
 
 //TODO
 
@@ -67,9 +67,8 @@ template VC_AND_DISCLOSE() {
     disclose.selector_older_than <== selector_older_than;
     disclose.current_date <== current_date;
     disclose.majority <== majority;
-   
-    signal output revealedData_packed[3] <== disclose.revealedData_packed;
 
+    signal output revealedData_packed[3] <== disclose.revealedData_packed;
 
     signal output nullifier <== Poseidon(2)([secret, scope]);
 }

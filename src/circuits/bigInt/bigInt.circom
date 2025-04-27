@@ -5,7 +5,7 @@ include "circomlib/circuits/bitify.circom";
 include "./bigIntFunc.circom";
 include "./overflow.circom";
 include "./arithmetic.circom";
-include "@openpassport/zk-email-circuits/lib/bigint.circom";
+include "@zk-email/circuits/lib/bigint.circom";
 
 // What BigInt in this lib means
 // We represent big number as array of chunks with some shunk_size (will be explained later) 

@@ -1,7 +1,7 @@
 pragma circom 2.1.9;
 
 include "../bigInt/bigIntFunc.circom";
-include "../bigInt/bigint.circom";
+include "../bigInt/bigInt.circom";
 include "../bigInt/overflow.circom";
 include "../bigInt/helpers.circom";
 include "./get.circom";
@@ -36,7 +36,7 @@ template PointOnCurve(A,B,P){
     ax.in2 <== A;
 
     // check if y^2 - (x^3 + a * x + b) == 0  mod p
-    compare isZeroCongruent = BigIntIsZeroModP(n, n * 3 + 2 * k, k * 3 - 2, k * 3, k);
+    component isZeroCongruent = BigIntIsZeroModP(n, n * 3 + 2 * k, k * 3 - 2, k * 3, k);
 
     for(var i = 0; i < k; i++){
         isZeroCongruent.in[i] <== cube.out[i] + ax.out[i] - ySquare.out[i] + B[i];
@@ -80,8 +80,8 @@ template PointOnTangent(A,B,P){
     rightMult.in2 <== bigSub.out;
 
     component scalar2 = ScalarMultOverflow(k);
-    scalarMult2.in <== in1[1];
-    scalarMult2.scalar <== 2;
+    scalar2.in <== in1[1];
+    scalar2.scalar <== 2;
 
     // Compute y3 + y
     component bigAdd2 = BigAddOverflow(n, k, k);
@@ -186,7 +186,8 @@ template EllipticCurvePrecomputePipinger(A, B, P, WINDOW_SIZE){
             
         }
         else {
-            adders[i \ 2 - 1] = EllipticCurveAdd( A, B, P);
+            adders[i \ 2 - 1] = EllipticCurveAdd(A, B, P);
+
             adders[i \ 2 - 1].in1 <== out[1];
             adders[i \ 2 - 1].in2 <== out[i - 1];
             adders[i \ 2 - 1].out ==> out[i];
@@ -220,11 +221,11 @@ template EllipticCurveDouble( A, B, P){
     }
     
     // Check if the resulting point lies on the tangent
-    component onTangentCheck = PointOnTangent( A, B, P);
+    component onTangentCheck = PointOnTangent(A, B, P);
     onTangentCheck.in1 <== in;
     onTangentCheck.in2 <== out;
     // Check if the resulting point lies on the curve
-    component onCurveCheck = PointOnCurve( A, B, P);
+    component onCurveCheck = PointOnCurve(A, B, P);
     onCurveCheck.in <== out;
 
 }
@@ -267,7 +268,8 @@ template EllipticCurveAdd(A, B, P){
 }
 
 template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
-    
+    var n = 66;
+    var k = 8;
     signal input in[2][k];
     signal input scalar[k];
     
@@ -329,7 +331,7 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
         
         if (i != 0){
             for (var j = 0; j < WINDOW_SIZE; j++){
-                doublers[i + j - WINDOW_SIZE] = EllipticCurveDouble( A, B, P);
+                doublers[i + j - WINDOW_SIZE] = EllipticCurveDouble(A, B, P);
                 
                 // if input == 0, double gen, result - zero
                 // if input != 0, double res window times, result - doubling result
@@ -419,9 +421,7 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
     out <== resultingPoints[ADDERS_NUMBER];
 }
 
-
-
-/// @title EllipicCurveScalarGeneratorMult
+/// @title EllipticCurveScalarGeneratorMult
 /// @notice Calculates the elliptic curve scalar multiplication: G * scalar
 /// @dev This function works for multiple elliptic curve types. The generator power tables for each curve are pre-generated. It performs the scalar multiplication in chunks using the specified chunk size and number of chunks.
 /// @param n The size of each chunk used for scalar multiplication. 
@@ -430,7 +430,7 @@ template EllipticCurveScalarMult(A, B, P, WINDOW_SIZE){
 /// @param B The curve parameter B (used for curve equation: y^2 = x^3 + Ax + B).
 /// @param P The elliptic curve parameters [P0, P1, P2, P3] defining the curve.
 /// @return out The resulting elliptic curve point after multiplying the generator G with the scalar.
-template EllipicCurveScalarGeneratorMult( A, B, P){
+template EllipticCurveScalarGeneratorMult(A, B, P){
     var n = 66;
     var k = 8;
     signal input scalar[k];
@@ -619,5 +619,4 @@ template EllipicCurveScalarGeneratorMult( A, B, P){
         }
     }
     out <== resultingPoints[parts - 2];
-    
 }

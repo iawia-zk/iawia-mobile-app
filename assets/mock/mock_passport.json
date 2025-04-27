@@ -1,0 +1,12 @@
+{
+    "firstName": "Ahmet",
+    "gender": "M",
+    "issuer": "TUR",
+    "lastName": "Yılmaz",
+    "nationality": "TUR",
+    "photo": {
+      "base64": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+      "width": 600,
+      "height": 800
+    }
+  }
