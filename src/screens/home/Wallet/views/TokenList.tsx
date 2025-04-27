@@ -29,6 +29,7 @@ function TokenList(): ReactElement {
           alignItems="center"
           justifyContent="space-between"
           p="s"
+          px={'m'}
           backgroundColor="backgroundSecondary"
           borderRadius={16}>
           <Box flexDirection="row" alignItems="center" gap="m">

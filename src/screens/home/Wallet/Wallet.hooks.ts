@@ -4,7 +4,7 @@ import { getRawDataFromHex } from 'helpers/walletService/walletService.helper';
 import { useEffect, useState } from 'react';
 import { TWalletData } from 'types/walletData';
 
-function useWalletTransactions() {
+function useWalletTransactions(walletReady: boolean) {
   const { walletState, walletDispatch } = useWalletContext();
   const [loading, setLoading] = useState(false);
 
@@ -26,9 +26,11 @@ function useWalletTransactions() {
   }
 
   useEffect(() => {
-    getTransactionData();
-    walletDispatch.getBalance();
-  }, []);
+    if (walletReady) {
+      getTransactionData();
+      walletDispatch.getBalance();
+    }
+  }, [walletReady]);
 
   return {
     walletState,

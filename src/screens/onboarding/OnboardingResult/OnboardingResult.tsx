@@ -22,6 +22,7 @@ function OnboardingResult({ navigation }: TNavigationProps<'OnboardingResult'>) 
   }
 
   function navigateToHome() {
+    walletDispatch.importWallet(walletState.wallet?.mnemonic?.phrase ?? '');
     navigation.navigate('Wallet');
   }
 

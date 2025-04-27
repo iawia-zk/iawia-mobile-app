@@ -44,5 +44,12 @@
   "screens.onboardingResult.phase3": "Create data commitments!",
   "label.formattedBalance": "{{balance}} eth",
   "label.tokens": "Tokens",
-  "label.activity": "Activity"
+  "label.activity": "Activity",
+  "label.initialBanner": "Generate your commitments",
+  "label.initialBannerDescription": "You need to send an initial transaction of 0.0001eth to store your commitments",
+  "button.generateCommitments": "Generate Commitments",
+  "label.export.toExtension": "Export to Extension",
+  "label.export.toExtension.description": "Generates encrypted data for your wallet",
+  "label.export.phrase": "Export Phrase",
+  "label.export.phrase.description": "Requires you to scan your passport"
 }

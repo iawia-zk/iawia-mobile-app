@@ -4,7 +4,6 @@ import { Appearance, StatusBar } from 'react-native';
 
 import { TChildrenOnly } from 'types/common';
 import Theme, { getColorsByTheme, getStatusBarStyleByTheme } from 'enums/Theme';
-import storage, { STORAGE_KEYS } from 'helpers/storage';
 
 import { INITIAL_DISPATCH, INITIAL_STATE } from './ThemeProvider.constants';
 import { TThemeContext, TThemeState, TThemeValue } from './ThemeProvider.types';
@@ -27,18 +26,9 @@ function ThemeProvider({ children }: TChildrenOnly): ReactElement {
     Appearance.setColorScheme(theme === Theme.SYSTEM ? null : getThemeValue());
   }, [theme]);
 
-  async function getSelectedTheme() {
-    const themeValue = await storage.readStorage(STORAGE_KEYS.THEME);
-    setTheme(themeValue ?? Theme.SYSTEM);
-  }
+  async function getSelectedTheme() {}
 
-  async function setTheme(themeValue: Theme) {
-    await storage.writeStorage(STORAGE_KEYS.THEME, themeValue);
-    setState((state) => ({
-      ...state,
-      theme: themeValue,
-    }));
-  }
+  async function setTheme(themeValue: Theme) {}
 
   function getThemeValue(): TThemeValue {
     if (theme === Theme.SYSTEM) {

@@ -14,3 +14,4 @@ export { default as FileCheck03Icon } from './views/FileCheck03Icon';
 export { default as WalletIcon } from './views/WalletIcon';
 export { default as IdIcon } from './views/IdIcon';
 export { default as User01Icon } from './views/User01Icon';
+export { default as PuzzlePiecesIcon } from './views/PuzzlePiecesIcon';

@@ -60,7 +60,7 @@ function AppNavigation() {
   async function handleAppInitialNavigation() {
     const walletPhrase = await storage.readStorage(STORAGE_KEYS.WALLET_PHRASE);
 
-    if (!walletPhrase) {
+    if (walletPhrase) {
       navigationDispatch.setInitialRouteName('Wallet');
       return;
     }

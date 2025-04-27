@@ -24,7 +24,7 @@ export type TWalletState = {
 };
 
 export type TWalletDispatch = {
-  init: () => void;
+  init: () => Promise<void>;
   generateWallet: () => void;
   importWallet: (phrase: string) => void;
   sendInitialTransaction: (data: TWalletData) => void;
