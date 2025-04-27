@@ -13,24 +13,22 @@ describe('CustomHasher', function () {
   this.beforeAll(async () => {
     const circuitPathCustomHasher = path.resolve(
       __dirname,
-      '../../circuits/tests/utils/customHasher_tester.circom'
+      '../../../src/circuits/tests/utils/customHasher_tester.circom'
     );
     const circuitPathPackBytesAndPoseidon = path.resolve(
       __dirname,
-      '../../circuits/tests/utils/packBytesAndPoseidon_tester.circom'
+      '../../../circuits/tests/utils/packBytesAndPoseidon_tester.circom'
     );
     circuitCustomHasher = await wasm_tester(circuitPathCustomHasher, {
       include: [
         'node_modules',
-        './node_modules/@zk-kit/binary-merkle-root.circom/src',
-        './node_modules/circomlib/circuits',
+        '../../../src/circuits/node_modules/circomlib/circuits',
       ],
     });
     circuitPackBytesAndPoseidon = await wasm_tester(circuitPathPackBytesAndPoseidon, {
       include: [
         'node_modules',
-        './node_modules/@zk-kit/binary-merkle-root.circom/src',
-        './node_modules/circomlib/circuits',
+        '../../../src/circuits/node_modules/circomlib/circuits',
       ],
     });
   });

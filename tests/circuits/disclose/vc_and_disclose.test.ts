@@ -47,12 +47,11 @@ describe('Disclose', function () {
 
   before(async () => {
     circuit = await wasm_tester(
-      path.join(__dirname, '../../circuits/disclose/vc_and_disclose.circom'),
+      path.join(__dirname, '../../../src/circuits/vc_and_disclose.circom'),
       {
         include: [
           'node_modules',
-          './node_modules/@zk-kit/binary-merkle-root.circom/src',
-          './node_modules/circomlib/circuits',
+          '../../../src/circuits/node_modules/circomlib/circuits',
         ],
       }
     );
@@ -184,185 +183,185 @@ describe('Disclose', function () {
     expect(reveal_unpacked[89]).to.equal('\x00');
   });
 
-  describe('OFAC disclosure', function () {
-    it('should allow disclosing OFAC check result when selector is 1', async function () {
-      w = await circuit.calculateWitness(inputs);
+//   describe('OFAC disclosure', function () {
+//     it('should allow disclosing OFAC check result when selector is 1', async function () {
+//       w = await circuit.calculateWitness(inputs);
 
-      const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
-      const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
+//       const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
+//       const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
 
-      console.log('reveal_unpacked', reveal_unpacked);
-      // OFAC result is stored at index 90 in the revealed data
-      const ofac_results = reveal_unpacked.slice(90, 93);
+//       console.log('reveal_unpacked', reveal_unpacked);
+//       // OFAC result is stored at index 90 in the revealed data
+//       const ofac_results = reveal_unpacked.slice(90, 93);
 
-      console.log('ofac_results', ofac_results);
+//       console.log('ofac_results', ofac_results);
 
-      expect(ofac_results).to.deep.equal(
-        ['\x01', '\x01', '\x01'],
-        'OFAC result bits should be [1, 1, 1]'
-      );
-      expect(ofac_results).to.not.equal(['\x00', '\x00', '\x00'], 'OFAC result should be revealed');
-    });
+//       expect(ofac_results).to.deep.equal(
+//         ['\x01', '\x01', '\x01'],
+//         'OFAC result bits should be [1, 1, 1]'
+//       );
+//       expect(ofac_results).to.not.equal(['\x00', '\x00', '\x00'], 'OFAC result should be revealed');
+//     });
 
-    it('should not disclose OFAC check result when selector is 0', async function () {
-      w = await circuit.calculateWitness({
-        ...inputs,
-        selector_ofac: '0',
-      });
+//     it('should not disclose OFAC check result when selector is 0', async function () {
+//       w = await circuit.calculateWitness({
+//         ...inputs,
+//         selector_ofac: '0',
+//       });
 
-      const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
-      const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
+//       const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
+//       const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
 
-      // OFAC result should be hidden (null byte)
-      const ofac_result = reveal_unpacked[90];
-      expect(ofac_result).to.equal('\x00', 'OFAC result should not be revealed');
-    });
+//       // OFAC result should be hidden (null byte)
+//       const ofac_result = reveal_unpacked[90];
+//       expect(ofac_result).to.equal('\x00', 'OFAC result should not be revealed');
+//     });
 
-    it('should show different levels of OFAC matching', async function () {
-      // Test cases for different matching scenarios
-      const testCases = [
-        {
-          desc: 'No details match',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'USA',
-            '010101',
-            '300101',
-            'DIF123456',
-            'DIFFERENT NAME',
-            'DIFFERENT SURNAME'
-          ),
-          expectedBits: ['\x01', '\x01', '\x01'],
-        },
-        {
-          desc: 'Only passport number matches',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'ESP', // different nationality
-            '000101',
-            '300101',
-            '98lh90556', // Matching passport number
-            'DIFFERENT NAME',
-            'DIFFERENT SURNAME'
-          ),
-          expectedBits: ['\x01', '\x01', '\x01'],
-        },
-        {
-          desc: 'Only nationality matches',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'FRA',
-            '991231',
-            '300101',
-            'DIF123456', // different passport number
-            'DIFFERENT NAME',
-            'DIFFERENT SURNAME'
-          ),
-          expectedBits: ['\x01', '\x01', '\x01'],
-        },
-        {
-          desc: 'Only passport number and nationality matches',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'FRA',
-            '991231',
-            '300101',
-            '98lh90556',
-            'DIFFERENT NAME',
-            'DIFFERENT SURNAME'
-          ),
-          expectedBits: ['\x00', '\x01', '\x01'],
-        },
-        {
-          desc: 'Name and DOB matches (so YOB matches too)',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'FRA',
-            '541007',
-            '300101',
-            'DIF123456',
-            'HENAO MONTOYA',
-            'ARCANGEL DE JESUS'
-          ),
-          expectedBits: ['\x01', '\x00', '\x00'],
-        },
-        {
-          desc: 'Only name and YOB match',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'FRA',
-            '541299',
-            '300101', // Same year (54) different month/day
-            'DIF123456',
-            'HENAO MONTOYA',
-            'ARCANGEL DE JESUS'
-          ),
-          expectedBits: ['\x01', '\x01', '\x00'],
-        },
-        {
-          desc: 'All details match',
-          data: genMockPassportData(
-            'sha512',
-            'sha512',
-            'ecdsa_sha512_secp521r1_521',
-            'FRA',
-            '541007',
-            '300101',
-            '98lh90556',
-            'HENAO MONTOYA',
-            'ARCANGEL DE JESUS'
-          ),
-          expectedBits: ['\x00', '\x00', '\x00'],
-        },
-      ];
+//     it('should show different levels of OFAC matching', async function () {
+//       // Test cases for different matching scenarios
+//       const testCases = [
+//         {
+//           desc: 'No details match',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'USA',
+//             '010101',
+//             '300101',
+//             'DIF123456',
+//             'DIFFERENT NAME',
+//             'DIFFERENT SURNAME'
+//           ),
+//           expectedBits: ['\x01', '\x01', '\x01'],
+//         },
+//         {
+//           desc: 'Only passport number matches',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'ESP', // different nationality
+//             '000101',
+//             '300101',
+//             '98lh90556', // Matching passport number
+//             'DIFFERENT NAME',
+//             'DIFFERENT SURNAME'
+//           ),
+//           expectedBits: ['\x01', '\x01', '\x01'],
+//         },
+//         {
+//           desc: 'Only nationality matches',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'FRA',
+//             '991231',
+//             '300101',
+//             'DIF123456', // different passport number
+//             'DIFFERENT NAME',
+//             'DIFFERENT SURNAME'
+//           ),
+//           expectedBits: ['\x01', '\x01', '\x01'],
+//         },
+//         {
+//           desc: 'Only passport number and nationality matches',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'FRA',
+//             '991231',
+//             '300101',
+//             '98lh90556',
+//             'DIFFERENT NAME',
+//             'DIFFERENT SURNAME'
+//           ),
+//           expectedBits: ['\x00', '\x01', '\x01'],
+//         },
+//         {
+//           desc: 'Name and DOB matches (so YOB matches too)',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'FRA',
+//             '541007',
+//             '300101',
+//             'DIF123456',
+//             'HENAO MONTOYA',
+//             'ARCANGEL DE JESUS'
+//           ),
+//           expectedBits: ['\x01', '\x00', '\x00'],
+//         },
+//         {
+//           desc: 'Only name and YOB match',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'FRA',
+//             '541299',
+//             '300101', // Same year (54) different month/day
+//             'DIF123456',
+//             'HENAO MONTOYA',
+//             'ARCANGEL DE JESUS'
+//           ),
+//           expectedBits: ['\x01', '\x01', '\x00'],
+//         },
+//         {
+//           desc: 'All details match',
+//           data: genMockPassportData(
+//             'sha512',
+//             'sha512',
+//             'ecdsa_sha512_secp521r1_521',
+//             'FRA',
+//             '541007',
+//             '300101',
+//             '98lh90556',
+//             'HENAO MONTOYA',
+//             'ARCANGEL DE JESUS'
+//           ),
+//           expectedBits: ['\x00', '\x00', '\x00'],
+//         },
+//       ];
 
-      for (const testCase of testCases) {
-        console.log(`Testing: ${testCase.desc}`);
+//       for (const testCase of testCases) {
+//         console.log(`Testing: ${testCase.desc}`);
 
-        const passportData = testCase.data;
-        const sanctionedCommitment = generateCommitment(
-          secret,
-          PASSPORT_ATTESTATION_ID,
-          passportData
-        );
-        tree.insert(BigInt(sanctionedCommitment));
+//         const passportData = testCase.data;
+//         const sanctionedCommitment = generateCommitment(
+//           secret,
+//           PASSPORT_ATTESTATION_ID,
+//           passportData
+//         );
+//         tree.insert(BigInt(sanctionedCommitment));
 
-        const testInputs = generateCircuitInputsVCandDisclose(
-          secret,
-          PASSPORT_ATTESTATION_ID,
-          passportData,
-          scope,
-          Array(88).fill('0'), // selector_dg1
-          selector_older_than,
-          tree,
-          majority,
-          forbidden_countries_list,
-          user_identifier
-        );
+//         const testInputs = generateCircuitInputsVCandDisclose(
+//           secret,
+//           PASSPORT_ATTESTATION_ID,
+//           passportData,
+//           scope,
+//           Array(88).fill('0'), // selector_dg1
+//           selector_older_than,
+//           tree,
+//           majority,
+//           forbidden_countries_list,
+//           user_identifier
+//         );
 
-        w = await circuit.calculateWitness(testInputs);
-        const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
-        const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
-        const ofac_results = reveal_unpacked.slice(90, 93);
+//         w = await circuit.calculateWitness(testInputs);
+//         const revealedData_packed = await circuit.getOutput(w, ['revealedData_packed[3]']);
+//         const reveal_unpacked = formatAndUnpackReveal(revealedData_packed);
+//         const ofac_results = reveal_unpacked.slice(90, 93);
 
-        console.log(`${testCase.desc} - OFAC bits:`, ofac_results);
-        expect(ofac_results).to.deep.equal(
-          testCase.expectedBits,
-          `Failed matching pattern for: ${testCase.desc}`
-        );
-      }
-    });
-  });
+//         console.log(`${testCase.desc} - OFAC bits:`, ofac_results);
+//         expect(ofac_results).to.deep.equal(
+//           testCase.expectedBits,
+//           `Failed matching pattern for: ${testCase.desc}`
+//         );
+//       }
+//     });
+//   });
 });

@@ -65,7 +65,7 @@ describe('DateIsLessChecker Circuit Test', function () {
 
   before(async () => {
     circuit = await wasm_tester(
-      path.join(__dirname, '../../circuits/tests/utils/isValid_tester.circom'),
+      path.join(__dirname, '../../../src/circuits/tests/utils/isValid_tester.circom'),
       {
         include: ['node_modules'],
       }

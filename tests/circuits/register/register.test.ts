@@ -8,16 +8,16 @@ import { wasm as wasm_tester } from 'circom_tester';
 import { generateCircuitInputsRegister } from 'helpers/circuits/generateInputs';
 import { genMockPassportData } from 'helpers/parsePassport/generateMockData';
 import { SignatureAlgorithm } from 'types/passportData';
-import { sigAlgs, fullSigAlgs } from './test_cases';
+import { fullSigAlgs } from './test_cases';
 import { generateCommitment, generateNullifier } from 'helpers/parsePassport/passport';
 import { poseidon6 } from 'poseidon-lite';
 import { PASSPORT_ATTESTATION_ID } from 'constants/circuits';
 import { parseCertificateSimple } from 'helpers/parseCertificate/parseCertificateSimple';
-import serialized_dsc_tree from 'tests/contracts/utils/pubkeys/serialized_dsc_tree.json';
+import serialized_dsc_tree from '../../contracts/utils/pubkeys/serialized_dsc_tree.json';
 
 dotenv.config();
 
-const testSuite = process.env.FULL_TEST_SUITE === 'true' ? fullSigAlgs : sigAlgs;
+const testSuite = fullSigAlgs 
 
 testSuite.forEach(
   ({
@@ -58,16 +58,12 @@ testSuite.forEach(
         circuit = await wasm_tester(
           path.join(
             __dirname,
-            `../../circuits/register/instances/${getCircuitNameFromPassportData(
-              passportData,
-              'register'
-            )}.circom`
+            `../../circuits/register/register_main.circom`
           ),
           {
             include: [
               'node_modules',
-              './node_modules/@zk-kit/binary-merkle-root.circom/src',
-              './node_modules/circomlib/circuits',
+              '../../../src/circuits/node_modules/circomlib/circuits',
             ],
           }
         );

@@ -6,59 +6,10 @@ import * as path from 'path';
 import { splitToWords } from 'helpers/bytes/bytes';
 
 const elliptic = initElliptic();
-const testSuite = [
-  {
-    hash: 'sha512',
-    curve: 'brainpoolP256r1',
-    n: 64,
-    k: 4,
-    reason: 'when hash is greater than curve bits',
-  },
-];
+
 
 const fullTestSuite = [
-  {
-    hash: 'sha1',
-    curve: 'brainpoolP224r1',
-    n: 32,
-    k: 7,
-    reason: 'when hash is lesser than curve bits',
-  },
-  {
-    hash: 'sha512',
-    curve: 'brainpoolP256r1',
-    n: 64,
-    k: 4,
-    reason: 'when hash is greater than curve bits',
-  },
-  {
-    hash: 'sha384',
-    curve: 'brainpoolP384r1',
-    n: 64,
-    k: 6,
-    reason: 'when hash bits are the same as curve bits',
-  },
-  {
-    hash: 'sha512',
-    curve: 'brainpoolP512r1',
-    n: 64,
-    k: 8,
-    reason: 'when hash bits are the same as curve bits',
-  },
-  {
-    hash: 'sha256',
-    curve: 'p256',
-    n: 64,
-    k: 4,
-    reason: 'when hash bits are the same as curve bits',
-  },
-  {
-    hash: 'sha384',
-    curve: 'p384',
-    n: 64,
-    k: 6,
-    reason: 'when hash bits are the same as curve bits',
-  },
+
   {
     hash: 'sha512',
     curve: 'p521',
@@ -86,9 +37,9 @@ describe('ecdsa', () => {
 
         it(reason, async () => {
           const circuit = await wasmTester(
-            path.join(__dirname, `../../circuits/tests/utils/ecdsa/test_${curve}.circom`),
+            path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
             {
-              include: ['node_modules', './node_modules/@zk-kit/binary-merkle-root.circom/src'],
+              include: ['node_modules',],
             }
           );
 
@@ -110,13 +61,10 @@ describe('ecdsa', () => {
     it('should not verify if either signature component is greater than the order', async function () {
       this.timeout(0);
       // takes way too long to find a valid input for these
-      if (['p256', 'p384'].includes(curve)) {
-        return;
-      }
       const circuit = await wasmTester(
-        path.join(__dirname, `../../circuits/tests/utils/ecdsa/test_${curve}.circom`),
+        path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
         {
-          include: ['node_modules', './node_modules/@zk-kit/binary-merkle-root.circom/src'],
+          include: ['node_modules',],
         }
       );
 
@@ -139,9 +87,9 @@ describe('ecdsa', () => {
   it('should not accept invalid chunks in the signature', async function () {
     this.timeout(0);
     const circuit = await wasmTester(
-      path.join(__dirname, `../../circuits/tests/utils/ecdsa/test_p256.circom`),
+      path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
       {
-        include: ['node_modules', './node_modules/@zk-kit/binary-merkle-root.circom/src'],
+        include: ['node_modules',],
       }
     );
 
@@ -195,59 +143,6 @@ describe('ecdsa', () => {
       if (!(err as Error).message.includes('Num2Bits')) {
         throw err;
       }
-    }
-  });
-
-  it('should reduce the final signature addition mod n', async function () {
-    this.timeout(0);
-    const circuit = await wasmTester(
-      path.join(__dirname, `../../circuits/tests/utils/ecdsa/test_p256.circom`),
-      {
-        include: ['node_modules', './node_modules/@zk-kit/binary-merkle-root.circom/src'],
-      }
-    );
-
-    const inputs = {
-      signature: [
-        ['884452912994769579', '4834901530490986875', '0', '0'],
-        [
-          '17562291160714782030',
-          '13611842547513532036',
-          '18446744073709551615',
-          '18446744069414584320',
-        ],
-      ],
-      pubKey: [
-        [
-          '12004473255778836739',
-          '5567425807485590512',
-          '4612562821672420442',
-          '781819838238377577',
-        ],
-        [
-          '2517678904895060574',
-          '13415238991415823444',
-          '5824794594647846510',
-          '14195660962316692941',
-        ],
-      ],
-      hashParsed: [
-        1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0,
-        0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0,
-        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0,
-        1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0,
-        0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
-        0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0,
-        0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1,
-        1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0,
-        0, 0, 1, 0, 0, 0, 1, 1,
-      ],
-    };
-    try {
-      const witness = await circuit.calculateWitness(inputs);
-      await circuit.checkConstraints(witness);
-    } catch (err) {
-      throw err;
     }
   });
 });

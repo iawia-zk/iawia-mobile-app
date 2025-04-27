@@ -11,11 +11,11 @@ import { SignatureAlgorithm } from 'types/passportData';
 import { getLeafDscTreeFromParsedDsc } from 'helpers/trees/trees';
 import { parseCertificateSimple } from 'helpers/parseCertificate/parseCertificateSimple';
 import { parseDscCertificateData } from 'helpers/parseCertificate/parseDscCertificate';
-import serialized_csca_tree from 'tests/contracts/utils/pubkeys/serialized_csca_tree.json';
+import serialized_csca_tree from '../../contracts/utils/pubkeys/serialized_csca_tree.json';
 
 dotenv.config();
 
-const testSuite = process.env.FULL_TEST_SUITE === 'true' ? fullSigAlgs : sigAlgs;
+const testSuite = fullSigAlgs;
 
 testSuite.forEach(({ sigAlg, hashFunction, domainParameter, keyLength }) => {
   const passportData = genMockPassportData(
@@ -40,16 +40,12 @@ testSuite.forEach(({ sigAlg, hashFunction, domainParameter, keyLength }) => {
       circuit = await wasm_tester(
         path.join(
           __dirname,
-          `../../circuits/dsc/instances/${getCircuitNameFromPassportData(
-            passportData,
-            'dsc'
-          )}.circom`
+          `../../../src/circuits/dsc/main_component.circom`
         ),
         {
           include: [
             'node_modules',
-            './node_modules/@zk-kit/binary-merkle-root.circom/src',
-            './node_modules/circomlib/circuits',
+            '../../../src/node_modules/circomlib/circuits',
           ],
         }
       );
