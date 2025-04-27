@@ -24,13 +24,17 @@ function OnboardingProvider({ children }: TChildrenOnly): ReactElement {
     setState((prevState) => ({ ...prevState, passportData }));
   }
 
+  function setMrzResult(data: TOnboardingState) {
+    setState((prevState) => ({ ...prevState, ...data }));
+  }
+
   function clear() {
     setState(INITIAL_STATE);
   }
 
   const value: TOnboardingContext = {
     onboardingState: state,
-    onboardingDispatch: { setPassportId, setPassportData, clear },
+    onboardingDispatch: { setPassportId, setPassportData, setMrzResult, clear },
   };
 
   return <onboardingContext.Provider value={value}>{children}</onboardingContext.Provider>;

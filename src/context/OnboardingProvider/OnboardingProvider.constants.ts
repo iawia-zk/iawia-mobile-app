@@ -12,5 +12,6 @@ export const INITIAL_STATE: TOnboardingState = {
 export const INITIAL_DISPATCH: TOnboardingDispatch = {
   setPassportId: NOOP,
   setPassportData: NOOP,
+  setMrzResult: NOOP,
   clear: NOOP,
 };
