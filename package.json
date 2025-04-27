@@ -35,6 +35,7 @@
     "dns.js": "^1.0.1",
     "domain-browser": "^1.2.0",
     "elliptic": "^6.6.1",
+    "ethereumjs-util": "^7.1.5",
     "ethers": "^6.13.5",
     "events": "^1.1.1",
     "expo": "^52.0.19",
