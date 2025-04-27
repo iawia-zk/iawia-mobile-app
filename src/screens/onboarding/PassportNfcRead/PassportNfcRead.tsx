@@ -21,20 +21,18 @@ import NfcManager from 'react-native-nfc-manager';
 import { PassportData } from 'types/passportData';
 import { useFocusEffect } from '@react-navigation/native';
 import useNFC from 'hooks/useNFC';
-import useUserInfo from 'stores/userInfoStore';
 import { checkIfPassportIdExists } from 'helpers/uniquenessService/uniquenessService';
+import { useOnboardingContext } from 'context/OnboardingProvider';
 
 const emitter =
   Platform.OS === 'android' ? new NativeEventEmitter(NativeModules.nativeModule) : null;
 
 function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const { passportNumber, dateOfBirth, dateOfExpiry } = useUserInfo();
-  console.log('PassportNfcRead', passportNumber, dateOfBirth, dateOfExpiry);
+  const { onboardingState } = useOnboardingContext();
   const { scan } = useNFC();
   const [isNfcSupported, setIsNfcSupported] = useState(true);
   const [isNfcEnabled, setIsNfcEnabled] = useState(true);
-  const [isNfcSheetOpen, setIsNfcSheetOpen] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -65,27 +63,29 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
     //    Therefore, we should create wallet, and create a start generating ZK screen to send initial transaction
     //    After the initial transaction is sent, we should store salty passport id hash in ipfs
 
-    console.log('handleNFCRead');
     await checkIfPassportIdExists('mock_passport_id');
     if (isNfcEnabled) {
-      setIsNfcSheetOpen(true);
-
-      // Add timestamp when scan starts
-      const scanStartTime = Date.now();
+      // setIsNfcSheetOpen(true);
 
       try {
-        console.log('Starting NFC Scan', passportNumber, dateOfBirth, dateOfExpiry);
+        const { documentNumber, birthDate, expiryDate } = onboardingState;
+
+        if (!documentNumber || !birthDate || !expiryDate) {
+          console.error('Passport data is missing');
+          return;
+        }
+        console.log('Starting NFC Scan', documentNumber, birthDate, expiryDate);
+
+        setIsLoading(true);
         const scanResponse = await scan({
-          passportNumber,
-          dateOfBirth,
-          dateOfExpiry,
+          passportNumber: documentNumber,
+          dateOfBirth: birthDate,
+          dateOfExpiry: expiryDate,
         });
 
-        const scanDurationSeconds = ((Date.now() - scanStartTime) / 1000).toFixed(2);
-        console.log('NFC Scan Successful - Duration:', scanDurationSeconds, 'seconds');
+        console.log('NFC Scan Response', scanResponse);
 
         let passportData: PassportData | null = null;
-        let parsedPassportData: PassportData | null = null;
         try {
           console.log('Parsing NFC Response', passportData);
           // passportData = parseScanResponse(scanResponse);
@@ -105,31 +105,10 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
           return;
         }
       } catch (e: any) {
-        const scanDurationSeconds = ((Date.now() - scanStartTime) / 1000).toFixed(2);
+        // const scanDurationSeconds = ((Date.now() - scanStartTime) / 1000).toFixed(2);
         console.error('NFC Scan Unsuccessful:', e);
-
-        if (e.message.includes('InvalidMRZKey')) {
-          // navigation.navigate('PassportCamera');
-        } else if (e.message.includes('Tag response error / no response')) {
-          // iOS
-          // navigation.navigate('PassportNFCTrouble');
-        } else if (e.message.includes('UserCanceled')) {
-          // iOS
-          // Do nothing
-        } else if (e.message.includes('UnexpectedError')) {
-          // iOS
-          // Timeout reached, do nothing
-        } else if (e.message.includes('Error: Lost connection to chip on card')) {
-          // android
-          // navigation.navigate('PassportNFCTrouble');
-        } else if (e.message.includes('Could not tranceive APDU')) {
-          // android
-          // navigation.navigate('PassportNFCTrouble');
-        } else {
-          // TODO: Handle other error types
-        }
       } finally {
-        setIsNfcSheetOpen(false);
+        setIsLoading(false);
       }
     } else if (isNfcSupported) {
       if (Platform.OS === 'ios') {
@@ -138,7 +117,7 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
         Linking.sendIntent('android.settings.NFC_SETTINGS');
       }
     }
-  }, [isNfcSupported, isNfcEnabled, passportNumber, dateOfBirth, dateOfExpiry]);
+  }, [isNfcSupported, isNfcEnabled, onboardingState]);
 
   useFocusEffect(
     useCallback(() => {

@@ -21,6 +21,7 @@ import NoInternetConnectionToaster from 'components/NoInternetConnectionToaster'
 import { getHeaderBlurStyleByTheme } from 'enums/Theme';
 import { useNavigationContext } from 'context/NavigationProvider';
 import PassportIdScan from './onboarding/PassportIdScan';
+import PassportCamera from './onboarding/PassportCamera';
 import getDeviceLanguage from 'helpers/deviceLanguage';
 import PassportNfcRead from './onboarding/PassportNfcRead';
 import SecurityAttributes from './onboarding/SecurityAttributes';
@@ -103,6 +104,14 @@ function AppNavigation() {
           options={{
             headerTitle: NavigationHeaderEmptyView,
             headerLeft: NavigationHeaderEmptyView,
+          }}
+        />
+        <RootStack.Screen
+          name="PassportCamera"
+          component={PassportCamera}
+          options={{
+            headerTitle: NavigationHeaderEmptyView,
+            headerLeft: NavigationHeaderBackButton,
           }}
         />
         <RootStack.Screen

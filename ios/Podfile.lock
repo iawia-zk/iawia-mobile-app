@@ -1242,9 +1242,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-config (1.5.3):
-    - react-native-config/App (= 1.5.3)
-  - react-native-config/App (1.5.3):
+  - react-native-biometrics (3.0.1):
+    - React-Core
+  - react-native-config (1.5.5):
+    - react-native-config/App (= 1.5.5)
+  - react-native-config/App (1.5.5):
     - React-Core
   - react-native-document-picker (9.3.1):
     - DoubleConversion
@@ -1719,7 +1721,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNLocalize (3.3.0):
+  - RNLocalize (3.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1876,7 +1878,7 @@ PODS:
     - Yoga
   - RNSha256 (1.4.10):
     - React-Core
-  - RNSVG (15.10.1):
+  - RNSVG (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1896,9 +1898,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.10.1)
+    - RNSVG/common (= 15.11.2)
     - Yoga
-  - RNSVG/common (15.10.1):
+  - RNSVG/common (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1962,6 +1964,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-biometrics (from `../node_modules/react-native-biometrics`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
@@ -2089,6 +2092,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-biometrics:
+    :path: "../node_modules/react-native-biometrics"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-document-picker:
@@ -2226,7 +2231,8 @@ SPEC CHECKSUMS:
   React-logger: ae95f0effa7e1791bd6f7283caddca323d4fbc1e
   React-Mapbuffer: 7eb5d69e1154e7743487ef0c8d7261e5b59afb32
   React-microtasksnativemodule: 01dd998649ff5f8814846b7eee84c4d57f5d3671
-  react-native-config: ea75335a7cca1d3326de1da384227e580a7c082e
+  react-native-biometrics: 43ed5b828646a7862dbc7945556446be00798e7d
+  react-native-config: 644074ab88db883fcfaa584f03520ec29589d7df
   react-native-document-picker: 0ec4f0abaa488744e6c1d73ef7f47dc6a6861fc1
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-image-picker: 732212151b686ff27ff57a7ea90f5d07d1a0c813
@@ -2268,12 +2274,12 @@ SPEC CHECKSUMS:
   RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
   RNGestureHandler: e1dcb274c17ca0680a04d7ff357e35e37c384185
   RNKeychain: b8765ddf2f0d8e4b24099831f6bc5b22e18e10e7
-  RNLocalize: 176bce32b3f2a3ce7ad318acd677badcbfd1e9df
+  RNLocalize: ecaf4684a41a21cfe485ff15f1b695739909873d
   RNOS: d07e5090b5060c6f2b83116d740a32cfdb33afe3
   RNReanimated: d8d0ab232099005d87384858de082ae021e7387c
   RNScreens: 351f431ef2a042a1887d4d90e1c1024b8ae9d123
   RNSha256: 4d35f112e967f58273d625a19376f4eafc72bd5c
-  RNSVG: 588c85abb474f7ee58dd886ed1fe198cc73772b2
+  RNSVG: bbbdd17e8730c0f2a9cb416e5f37be87e29ebc90
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   TcpSockets: d7fa8433e76a140bb34349c813eaa860e7f087af
   Yoga: fcc198acd4a55599b3468cfb6ebc526baff5f06e

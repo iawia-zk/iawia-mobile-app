@@ -1,3 +1,4 @@
+import { MrzResult } from 'helpers/extractMrz/extractMrz.types';
 import { PassportData } from 'hooks/useNFC/useNFC.types';
 
 export type TOnboardingContext = {
@@ -8,13 +9,11 @@ export type TOnboardingContext = {
 export type TOnboardingState = {
   passportId?: string;
   passportData?: PassportData;
-  documentNumber?: string;
-  birthDate?: string;
-  expiryDate?: string;
-};
+} & MrzResult;
 
 export type TOnboardingDispatch = {
   setPassportId: (passportId: string) => void;
   setPassportData: (data: PassportData) => void;
+  setMrzResult(data: MrzResult): void;
   clear: () => void;
 };

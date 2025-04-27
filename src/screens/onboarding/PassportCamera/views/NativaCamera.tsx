@@ -1,23 +1,10 @@
 import React, { useCallback } from 'react';
-import { NativeSyntheticEvent, PixelRatio, Platform, requireNativeComponent } from 'react-native';
-
 import extractMRZInfo from 'helpers/extractMrz';
+import { NativeSyntheticEvent, PixelRatio, Platform, requireNativeComponent } from 'react-native';
+import { RCTPassportOCRViewManagerProps, TNativeCameraProps } from '../PassportCamera.types';
 import { assert } from 'helpers/assertions';
-import { RCTFragment, RCTFragmentViewManagerProps } from './RctFragment';
-
-interface RCTPassportOCRViewManagerProps extends RCTFragmentViewManagerProps {
-  onPassportRead: (
-    event: NativeSyntheticEvent<{
-      data:
-        | string
-        | {
-            documentNumber: string;
-            expiryDate: string;
-            birthDate: string;
-          };
-    }>
-  ) => void;
-}
+import RCTFragment from './RctFragment';
+import { MrzResult } from 'helpers/extractMrz/extractMrz.types';
 
 const RCTPassportOCRViewNativeComponent = Platform.select({
   ios: requireNativeComponent('PassportOCRView'),
@@ -29,13 +16,8 @@ assert(
   'PassportOCRViewManager not registered for this platform'
 );
 
-export interface PassportCameraProps {
-  isMounted: boolean;
-  onPassportRead: (error: Error | null, mrzData?: ReturnType<typeof extractMRZInfo>) => void;
-}
-
-export const PassportCamera: React.FC<PassportCameraProps> = ({ onPassportRead, isMounted }) => {
-  const _onError = useCallback(
+function NativeCamera({ onPassportRead, isMounted }: TNativeCameraProps) {
+  const onError = useCallback(
     (
       event: NativeSyntheticEvent<{
         error: string;
@@ -58,13 +40,7 @@ export const PassportCamera: React.FC<PassportCameraProps> = ({ onPassportRead, 
   const _onPassportRead = useCallback(
     (
       event: NativeSyntheticEvent<{
-        data:
-          | string
-          | {
-              documentNumber: string;
-              expiryDate: string;
-              birthDate: string;
-            };
+        data: string | MrzResult;
       }>
     ) => {
       if (!isMounted) {
@@ -74,20 +50,25 @@ export const PassportCamera: React.FC<PassportCameraProps> = ({ onPassportRead, 
         onPassportRead(null, extractMRZInfo(event.nativeEvent.data));
       } else {
         onPassportRead(null, {
-          passportNumber: event.nativeEvent.data.documentNumber,
-          dateOfBirth: event.nativeEvent.data.birthDate,
-          dateOfExpiry: event.nativeEvent.data.expiryDate,
+          documentNumber: event.nativeEvent.data.documentNumber,
+          birthDate: event.nativeEvent.data.birthDate,
+          expiryDate: event.nativeEvent.data.expiryDate,
         });
       }
     },
     [onPassportRead, isMounted]
   );
 
+  if (!RCTPassportOCRViewNativeComponent) {
+    return <></>;
+  }
+
   if (Platform.OS === 'ios') {
     return (
       <RCTPassportOCRViewNativeComponent
-        onPassportRead={_onPassportRead}
-        onError={_onError}
+        // @ts-ignore
+        onPassportRead={onPassportRead}
+        onError={onError}
         style={{
           width: '130%',
           height: '130%',
@@ -106,9 +87,11 @@ export const PassportCamera: React.FC<PassportCameraProps> = ({ onPassportRead, 
           height: PixelRatio.getPixelSizeForLayoutSize(800),
           width: PixelRatio.getPixelSizeForLayoutSize(400),
         }}
-        onError={_onError}
+        onError={onError}
         onPassportRead={_onPassportRead}
       />
     );
   }
-};
+}
+
+export default NativeCamera;
