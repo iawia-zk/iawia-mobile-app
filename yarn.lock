@@ -222,7 +222,7 @@
 
 "@babel/helpers@^7.26.0":
   version "7.27.0"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.27.0.tgz#53d156098defa8243eab0f32fa17589075a1b808"
+  resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.27.0.tgz"
   integrity sha512-U5eyP/CTFPuNE3qk+WZMxFkp/4zUzdceQlfzf7DdGdhp+Fezd7HD+i8Y24ZuTMKX3wQBld449jijbGq6OdGNQg==
   dependencies:
     "@babel/template" "^7.27.0"
@@ -519,7 +519,7 @@
 
 "@babel/plugin-transform-block-scoped-functions@^7.25.9":
   version "7.26.5"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoped-functions/-/plugin-transform-block-scoped-functions-7.26.5.tgz#3dc4405d31ad1cbe45293aa57205a6e3b009d53e"
+  resolved "https://registry.npmjs.org/@babel/plugin-transform-block-scoped-functions/-/plugin-transform-block-scoped-functions-7.26.5.tgz"
   integrity sha512-chuTSY+hq09+/f5lMj8ZSYgCFpppV2CbYrhNFJ1BFoXpiWPnnAb7R0MqrafCpN8E1+YRrtM1MXZHJdIx8B6rMQ==
   dependencies:
     "@babel/helper-plugin-utils" "^7.26.5"
@@ -606,7 +606,7 @@
 
 "@babel/plugin-transform-exponentiation-operator@^7.25.9":
   version "7.26.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-exponentiation-operator/-/plugin-transform-exponentiation-operator-7.26.3.tgz#e29f01b6de302c7c2c794277a48f04a9ca7f03bc"
+  resolved "https://registry.npmjs.org/@babel/plugin-transform-exponentiation-operator/-/plugin-transform-exponentiation-operator-7.26.3.tgz"
   integrity sha512-7CAHcQ58z2chuXPWblnn1K6rLDnDWieghSOEmqQsrBenH0P9InCUtOJYD89pvngljmZlJcz3fcmgYsXFNGa1ZQ==
   dependencies:
     "@babel/helper-plugin-utils" "^7.25.9"
@@ -910,7 +910,7 @@
 
 "@babel/plugin-transform-typeof-symbol@^7.25.9":
   version "7.27.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typeof-symbol/-/plugin-transform-typeof-symbol-7.27.0.tgz#044a0890f3ca694207c7826d0c7a65e5ac008aae"
+  resolved "https://registry.npmjs.org/@babel/plugin-transform-typeof-symbol/-/plugin-transform-typeof-symbol-7.27.0.tgz"
   integrity sha512-+LLkxA9rKJpNoGsbLnAgOCdESl73vwYn+V6b+5wHbrE7OGKVDPHIQvbFSzqE6rwqaCw2RE+zdJrlLkcf8YOA0w==
   dependencies:
     "@babel/helper-plugin-utils" "^7.26.5"
@@ -3258,7 +3258,7 @@ babel-preset-current-node-syntax@^1.0.0:
 
 babel-preset-expo@~12.0.4:
   version "12.0.11"
-  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-12.0.11.tgz#3bbac54f269ae0cc94d198260e26d5020d146127"
+  resolved "https://registry.npmjs.org/babel-preset-expo/-/babel-preset-expo-12.0.11.tgz"
   integrity sha512-4m6D92nKEieg+7DXa8uSvpr0GjfuRfM/G0t0I/Q5hF8HleEv5ms3z4dJ+p52qXSJsm760tMqLdO93Ywuoi7cCQ==
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.12.9"
@@ -5116,7 +5116,7 @@ expect@^29.7.0:
 
 expo-asset@~11.0.1:
   version "11.0.5"
-  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-11.0.5.tgz#9d0ad28da3af220d25c001cd6e4a80cc669ee18b"
+  resolved "https://registry.npmjs.org/expo-asset/-/expo-asset-11.0.5.tgz"
   integrity sha512-TL60LmMBGVzs3NQcO8ylWqBumMh4sx0lmeJsn7+9C88fylGDhyyVnKZ1PyTXo9CVDBkndutZx2JUEQWM9BaiXw==
   dependencies:
     "@expo/image-utils" "^0.6.5"
@@ -5134,21 +5134,21 @@ expo-constants@~17.0.3, expo-constants@~17.0.8:
 
 expo-file-system@~18.0.6:
   version "18.0.12"
-  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-18.0.12.tgz#6ceeeb0725f6c5faaf58112f18c073c2acfb3027"
+  resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-18.0.12.tgz"
   integrity sha512-HAkrd/mb8r+G3lJ9MzmGeuW2B+BxQR1joKfeCyY4deLl1zoZ48FrAWjgZjHK9aHUVhJ0ehzInu/NQtikKytaeg==
   dependencies:
     web-streams-polyfill "^3.3.2"
 
 expo-font@~13.0.1:
   version "13.0.4"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-13.0.4.tgz#c60771446598ddfa98ac1d25244c916a089a99c9"
+  resolved "https://registry.npmjs.org/expo-font/-/expo-font-13.0.4.tgz"
   integrity sha512-eAP5hyBgC8gafFtprsz0HMaB795qZfgJWqTmU0NfbSin1wUuVySFMEPMOrTkTgmazU73v4Cb4x7p86jY1XXYUw==
   dependencies:
     fontfaceobserver "^2.1.0"
 
 expo-keep-awake@~14.0.1:
   version "14.0.3"
-  resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-14.0.3.tgz#74c91b68effdb6969bc1e8371621aad90386cfbf"
+  resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-14.0.3.tgz"
   integrity sha512-6Jh94G6NvTZfuLnm2vwIpKe3GdOiVBuISl7FI8GqN0/9UOg9E0WXXp5cDcfAG8bn80RfgLJS8P7EPUGTZyOvhg==
 
 expo-modules-autolinking@2.0.4:
@@ -8647,7 +8647,7 @@ pathval@^2.0.0:
 
 pbkdf2@3.0.8:
   version "3.0.8"
-  resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.8.tgz#2f8abf16ebecc82277945d748aba1d78761f61e2"
+  resolved "https://registry.npmjs.org/pbkdf2/-/pbkdf2-3.0.8.tgz"
   integrity sha512-Bf7yBd61ChnMqPqf+PxHm34Iiq9M9Bkd/+JqzosPOqwG6FiTixtkpCs4PNd38+6/VYRvAxGe/GgPb4Q4GktFzg==
   dependencies:
     create-hmac "^1.1.2"
@@ -9029,6 +9029,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-aes-crypto@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-aes-crypto/-/react-native-aes-crypto-3.2.1.tgz#25d508f38a068b4b302d9dd51ad9ca87afc9dba6"
+  integrity sha512-v7KDt1I2UqYwRJRFeJrB8zABQuUsawCyWLK+h5AF2aZqsrsIaR/+DaZrqCetR9QvYRI+oEVsrwBUv9xYXhfCBQ==
+
 react-native-biometrics@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/react-native-biometrics/-/react-native-biometrics-3.0.1.tgz"
@@ -9206,6 +9211,11 @@ react-native-tcp@^3.3.2:
     ip-regex "^1.0.3"
     process "^0.11.9"
     util "^0.10.3"
+
+react-native-toast-message@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-2.3.0.tgz"
+  integrity sha512-d7LldTK1ei1Bl7RFhoOYw8hVQ4oKPQHORYI//xR9Pyz3HxSlFlvQbueE5X3KLoemRRgBrOUg3zY6DxXnxrVLRg==
 
 react-native-udp@^2.7.0:
   version "2.7.0"
@@ -10481,7 +10491,7 @@ ts-mocha@^11.1.0:
 
 tslib@2.7.0:
   version "2.7.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.7.0.tgz#d9b40c5c40ab59e8738f297df3087bf1a2690c01"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
   integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
 
 tslib@^1.8.1:

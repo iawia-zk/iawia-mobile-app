@@ -1,3 +1,6 @@
+import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-toast-message';
+
 import Box from 'components/core/Box';
 import Card from 'components/core/Card';
 import ListItem from 'components/core/ListItem';
@@ -6,9 +9,11 @@ import { CheckIcon, PuzzlePiecesIcon, WalletIcon } from 'components/Icons';
 import ScrollView from 'components/ScrollView';
 import { NOOP } from 'constants/noop';
 import { useWalletContext, walletService } from 'context/WalletProvider/WalletProvider';
+import { encryptData } from 'helpers/encryption/encryption';
 import { BURN_ADDRESS } from 'helpers/walletService/walletService.constants';
 import { getRawDataFromHex } from 'helpers/walletService/walletService.helper';
 import React, { useEffect } from 'react';
+import Config from 'react-native-config';
 import { TI18nId } from 'types/common';
 import { TWalletData } from 'types/walletData';
 
@@ -18,6 +23,44 @@ const ZeroKnowledgeProof = () => {
   useEffect(() => {
     getTransactionData();
   }, []);
+
+  async function exportToExtension() {
+    console.log('exportToExtension');
+    const phrase = walletState.wallet?.mnemonic?.phrase;
+    if (!phrase) {
+      return;
+    }
+
+    console.log('phrase', phrase);
+
+    const encryptionKey = Config.PHRASE_ENCRYPTION_KEY;
+
+    if (!encryptionKey) {
+      console.log('no encryption key');
+      return;
+    }
+
+    console.log('encrypting phrase');
+    let encryptedPhrase = '';
+    try {
+      const encryptedData = await encryptData(phrase, encryptionKey);
+      encryptedPhrase = JSON.stringify(encryptedData);
+      console.log('encrypted phrase', encryptedPhrase);
+      Clipboard.setString(encryptedPhrase);
+      console.log('copying to clipboard');
+
+      Toast.show({
+        type: 'success',
+        text1: 'Encrypted phrase copied to clipboard!',
+      });
+    } catch (error) {
+      console.log('error', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to encrypt phrase',
+      });
+    }
+  }
 
   async function getTransactionData() {
     const transactions = await walletService.getTransactions();
@@ -45,7 +88,7 @@ const ZeroKnowledgeProof = () => {
             labelId="label.export.toExtension"
             descriptionId="label.export.toExtension.description"
             leftIcon={PuzzlePiecesIcon}
-            onPress={NOOP}
+            onPress={exportToExtension}
           />
           <ListItem
             labelId="label.export.phrase"

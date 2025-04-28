@@ -1,5 +1,6 @@
 import 'react-native-get-random-values';
 import React, { ReactElement } from 'react';
+import Toast from 'react-native-toast-message';
 
 import ThemeProvider from 'context/ThemeProvider';
 import AppNavigation from 'screens/AppNavigation';
@@ -18,6 +19,7 @@ function App(): ReactElement {
           <NavigationProvider>
             <WalletProvider>
               <AppNavigation />
+              <Toast />
             </WalletProvider>
           </NavigationProvider>
         </OnboardingProvider>
