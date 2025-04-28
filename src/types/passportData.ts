@@ -6,7 +6,6 @@ export type PassportTransactionData = {
   dateOfBirth: string;
   dateOfExpiry: string;
   documentNumber: string;
-  placeOfBirth: string;
   issuingCountry: string;
 };
 
