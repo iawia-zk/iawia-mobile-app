@@ -10,11 +10,15 @@ export const uploadFileToPinata = async (file: any) => {
     const fileType = file.type || 'application/octet-stream';
     const fileName = file.name || `file_${Date.now()}`;
 
+    const correctedUri = fileUri.startsWith('file://') ? fileUri : `file://${fileUri}`;
+
     let fileData = {
-      uri: fileUri,
+      uri: correctedUri,
       type: fileType,
       name: fileName,
     };
+
+    console.log('fileUri', fileData);
 
     const formData = new FormData();
     formData.append('file', fileData);

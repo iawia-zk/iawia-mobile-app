@@ -5,20 +5,16 @@ import Box from 'components/core/Box';
 import Card from 'components/core/Card';
 import ListItem from 'components/core/ListItem';
 import Text from 'components/core/Text';
-import { CheckIcon, PuzzlePiecesIcon, WalletIcon } from 'components/Icons';
+import { PuzzlePiecesIcon, WalletIcon } from 'components/Icons';
 import ScrollView from 'components/ScrollView';
 import { NOOP } from 'constants/noop';
-import { useWalletContext, walletService } from 'context/WalletProvider/WalletProvider';
-import { encryptData } from 'helpers/encryption/encryption';
-import { BURN_ADDRESS } from 'helpers/walletService/walletService.constants';
-import { getRawDataFromHex } from 'helpers/walletService/walletService.helper';
+import { useWalletContext } from 'context/WalletProvider/WalletProvider';
+import { encryptData } from 'helpers/encryption';
 import React, { useEffect } from 'react';
 import Config from 'react-native-config';
-import { TI18nId } from 'types/common';
-import { TWalletData } from 'types/walletData';
 
 const ZeroKnowledgeProof = () => {
-  const { walletState, walletDispatch } = useWalletContext();
+  const { walletState } = useWalletContext();
 
   useEffect(() => {
     getTransactionData();
@@ -63,18 +59,15 @@ const ZeroKnowledgeProof = () => {
   }
 
   async function getTransactionData() {
-    const transactions = await walletService.getTransactions();
-
-    if (!transactions || transactions.length === 0) {
-      return;
-    }
-
-    const transaction = transactions.filter((tx) => tx.to === BURN_ADDRESS)[0];
-
-    const transactionDetails = await walletService.getTransactionDetails(transaction.hash);
-    const stringData = getRawDataFromHex(transactionDetails?.data ?? '');
-    const data: TWalletData = JSON.parse(stringData);
-    walletDispatch.setWalletData(data);
+    // const transactions = await walletService.getTransactions();
+    // if (!transactions || transactions.length === 0) {
+    //   return;
+    // }
+    // const transaction = transactions.filter((tx) => tx.to === BURN_ADDRESS)[0];
+    // const transactionDetails = await walletService.getTransactionDetails(transaction.hash);
+    // const stringData = getRawDataFromHex(transactionDetails?.data ?? '');
+    // const data: TWalletData = JSON.parse(stringData);
+    // walletDispatch.setWalletData(data);
   }
 
   return (
@@ -100,7 +93,7 @@ const ZeroKnowledgeProof = () => {
         <Text variant="titleSubsection" color="textPrimary">
           Your commitments
         </Text>
-        <Card p={'m'} gap={'s'} mb={'xxl'}>
+        {/* <Card p={'m'} gap={'s'} mb={'xxl'}>
           {!walletState.walletData || walletState.walletData?.snarks.length === 0 ? (
             <>
               <Text variant="textBodyBold" color="textSecondary">
@@ -117,7 +110,7 @@ const ZeroKnowledgeProof = () => {
               />
             ))
           )}
-        </Card>
+        </Card> */}
       </Box>
     </ScrollView>
   );

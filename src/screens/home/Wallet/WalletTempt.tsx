@@ -3,6 +3,7 @@ import Box from 'components/core/Box';
 import Button from 'components/core/Button';
 import TextInput from 'components/core/TextInput';
 import ScrollView from 'components/ScrollView';
+import { NOOP } from 'constants/noop';
 import { useWalletContext, walletService } from 'context/WalletProvider/WalletProvider';
 import { getRawDataFromHex } from 'helpers/walletService/walletService.helper';
 import useInitialTransaction from 'hooks/useInitialTransaction';
@@ -11,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 
 const Wallet = () => {
   const { walletState, walletDispatch } = useWalletContext();
-  const { startTransaction, loading } = useInitialTransaction();
+  const { loading } = useInitialTransaction();
   const [phrase, setPhrase] = useState(
     walletState.wallet?.mnemonic?.phrase ??
       'wine cheap term venture cute liar shoe floor offer humor spatial lyrics'
@@ -68,7 +69,7 @@ const Wallet = () => {
           labelId="button.getTransactions"
           loading={txDataLoading}
         />
-        <Button onPress={startTransaction} labelId="button.startTransaction" loading={loading} />
+        <Button onPress={NOOP} labelId="button.startTransaction" loading={loading} />
       </Box>
     </ScrollView>
   );
