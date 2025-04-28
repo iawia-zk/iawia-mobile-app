@@ -1,9 +1,10 @@
 import React, { createContext, ReactElement, useContext, useState } from 'react';
-import { TWalletContext, TWalletData, TWalletState } from './WalletProvider.types';
+import { TWalletContext, TWalletState } from './WalletProvider.types';
 import { INITIAL_DISPATCH, INITIAL_STATE } from './WalletProvider.constants';
 import { TChildrenOnly } from 'types/common';
 import { WalletService } from 'helpers/walletService';
 import storage, { STORAGE_KEYS } from 'helpers/storage';
+import { PassportTransactionData } from 'types/passportData';
 
 const walletContext = createContext<TWalletContext>({
   walletState: INITIAL_STATE,
@@ -22,8 +23,8 @@ function WalletProvider({ children }: TChildrenOnly): ReactElement {
     }
   }
 
-  function sendInitialTransaction(data: TWalletData) {
-    walletService?.sendInitialTransaction(data);
+  function sendInitialTransaction(ipfsHash: string) {
+    walletService?.sendInitialTransaction(ipfsHash);
   }
 
   function generateWallet() {
@@ -42,7 +43,7 @@ function WalletProvider({ children }: TChildrenOnly): ReactElement {
     setState((prevState) => ({ ...prevState, balance }));
   }
 
-  function setWalletData(data: TWalletData) {
+  function setWalletData(data: PassportTransactionData) {
     setState((prevState) => ({ ...prevState, walletData: data }));
   }
 
