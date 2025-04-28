@@ -1,7 +1,10 @@
 // TODO: fix file paths for node_modules, files, etc.
-import chai, { expect, assert } from 'chai';
-import path from 'path';
+import { expect, assert } from 'chai';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { wasm as wasm_tester } from 'circom_tester';
+
+const _dirname = dirname(fileURLToPath(import.meta.url));
 
 describe('DateIsLessChecker Circuit Test', function () {
   this.timeout(0); // Disable timeout
@@ -65,9 +68,9 @@ describe('DateIsLessChecker Circuit Test', function () {
 
   before(async () => {
     circuit = await wasm_tester(
-      path.join(__dirname, '../../../src/circuits/tests/utils/isValid_tester.circom'),
+      path.join(_dirname, '../../../src/circuits/tests/utils/isValid_tester.circom'),
       {
-        include: ['node_modules'],
+        include: ['node_modules', '../../../node_modules/circomlib/circuits'],
       }
     );
   });

@@ -10,9 +10,7 @@ export interface TestCase {
   saltLength?: string; // Optional salt length for RSA-PSS
 }
 
-
 export const fullSigAlgs: TestCase[] = [
- 
   // secp
   {
     dgHashAlgo: 'sha512',

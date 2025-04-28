@@ -1,15 +1,15 @@
 // TODO: only use sha512 ecdsa
 import { wasm as wasmTester } from 'circom_tester';
 import * as crypto from 'crypto';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { initElliptic } from 'helpers/elliptic/elliptic';
-import * as path from 'path';
 import { splitToWords } from 'helpers/bytes/bytes';
 
-const elliptic = initElliptic();
+const _dirname = dirname(fileURLToPath(import.meta.url));
+const elliptic_ = initElliptic();
 
-
-const fullTestSuite = [
-
+const testSuite = [
   {
     hash: 'sha512',
     curve: 'p521',
@@ -37,9 +37,13 @@ describe('ecdsa', () => {
 
         it(reason, async () => {
           const circuit = await wasmTester(
-            path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
+            path.join(_dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
             {
-              include: ['node_modules',],
+              include: [
+                'node_modules',
+                '../../../node_modules/@zk-email/circuits/lib/',
+                '../../../node_modules/circomlib/circuits',
+              ],
             }
           );
 
@@ -62,9 +66,13 @@ describe('ecdsa', () => {
       this.timeout(0);
       // takes way too long to find a valid input for these
       const circuit = await wasmTester(
-        path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
+        path.join(_dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
         {
-          include: ['node_modules',],
+          include: [
+            'node_modules',
+            '../../../node_modules/@zk-email/circuits/lib/',
+            '../../../node_modules/circomlib/circuits',
+          ],
         }
       );
 
@@ -87,9 +95,13 @@ describe('ecdsa', () => {
   it('should not accept invalid chunks in the signature', async function () {
     this.timeout(0);
     const circuit = await wasmTester(
-      path.join(__dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
+      path.join(_dirname, `../../../src/circuits/tests/test_ecdsa.circom`),
       {
-        include: ['node_modules',],
+        include: [
+          'node_modules',
+          '../../../node_modules/@zk-email/circuits/lib/',
+          '../../../node_modules/circomlib/circuits',
+        ],
       }
     );
 
@@ -148,7 +160,7 @@ describe('ecdsa', () => {
 });
 
 function sign(message: Uint8Array, curve: string, hash: string, n: number, k: number) {
-  const ec = new elliptic.ec(curve);
+  const ec = new elliptic_.ec(curve);
 
   const key = ec.genKeyPair();
 
@@ -182,7 +194,7 @@ function signOverflow(
   k: number,
   overflowS: boolean
 ) {
-  const ec = new elliptic.ec(curve);
+  const ec = new elliptic_.ec(curve);
 
   const key = ec.genKeyPair();
 

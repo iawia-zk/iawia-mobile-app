@@ -1,6 +1,10 @@
-import chai, { expect, assert } from 'chai';
-import path from 'path';
+import { expect, assert } from 'chai';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { wasm as wasm_tester } from 'circom_tester';
+import { toBigInt } from 'ethers';
+
+const _dirname = dirname(fileURLToPath(import.meta.url));
 
 describe('DateIsLessChecker Circuit Test', function () {
   this.timeout(0); // Disable timeout
@@ -73,9 +77,9 @@ describe('DateIsLessChecker Circuit Test', function () {
 
   before(async () => {
     circuit = await wasm_tester(
-      path.join(__dirname, '../../../src/circuits/tests/utils/isOlderThan_tester.circom'),
+      path.join(_dirname, '../../../src/circuits/tests/utils/isOlderThan_tester.circom'),
       {
-        include: ['node_modules'],
+        include: ['node_modules', '../../../node_modules/circomlib/circuits'],
       }
     );
   });
@@ -111,14 +115,10 @@ describe('DateIsLessChecker Circuit Test', function () {
             date.day % 10,
           ].map((n) => n + 48), // Convert to ASCII for the circuit input
         };
-        /*
-          console.log("current date: " + JSON.stringify(currentDates[index]));
-          console.log("majority birth date: " + JSON.stringify(majorityBirthDates[index]));
-          console.log("yearDiff: " + (currentDates[index].year - majorityBirthDates[index].year) + " monthDiff: " + (currentDates[index].month - majorityBirthDates[index].month) + " dayDiff: " + (currentDates[index].day - majorityBirthDates[index].day));
-          */
+
         const witness = await circuit.calculateWitness(inputs, true);
         const output = await circuit.getOutput(witness, ['out']);
-        assert.strictEqual(output.out, '1', 'Person should be of majority age');
+        assert.strictEqual(output, toBigInt(1), 'Person should be of majority age');
       });
     });
   });
@@ -157,7 +157,7 @@ describe('DateIsLessChecker Circuit Test', function () {
                         */
         const witness = await circuit.calculateWitness(inputs, true);
         const output = await circuit.getOutput(witness, ['out']);
-        assert.strictEqual(output.out, '0', 'Person should not be of majority age');
+        assert.strictEqual(output, toBigInt(0), 'Person should not be of majority age');
       });
     });
   });
