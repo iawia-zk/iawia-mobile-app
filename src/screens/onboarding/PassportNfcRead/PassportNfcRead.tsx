@@ -85,6 +85,10 @@ function PassportNfcRead({ navigation }: TNavigationProps<'PassportNfcRead'>) {
 
         console.log('NFC Scan Response', scanResponse);
 
+        // TODO: IMPORTANT: Burada PassportTransactionData tipine parse edilmeli
+        // Bu json içerisindeki her veri, Config.PASSPORT_ENCRYPTION_KEY ile encrypt edilip
+        // store içerisinde saklanmalı
+
         let passportData: PassportData | null = null;
         try {
           console.log('Parsing NFC Response', passportData);
