@@ -24,6 +24,12 @@ function OnboardingProvider({ children }: TChildrenOnly): ReactElement {
     setState((prevState) => ({ ...prevState, passportData }));
   }
 
+  function setPassportTransactionData(
+    passportTransactionData: TOnboardingState['passportTransactionData']
+  ) {
+    setState((prevState) => ({ ...prevState, passportTransactionData }));
+  }
+
   function setMrzResult(data: TOnboardingState) {
     setState((prevState) => ({ ...prevState, ...data }));
   }
@@ -34,7 +40,13 @@ function OnboardingProvider({ children }: TChildrenOnly): ReactElement {
 
   const value: TOnboardingContext = {
     onboardingState: state,
-    onboardingDispatch: { setPassportId, setPassportData, setMrzResult, clear },
+    onboardingDispatch: {
+      setPassportId,
+      setPassportData,
+      setPassportTransactionData,
+      setMrzResult,
+      clear,
+    },
   };
 
   return <onboardingContext.Provider value={value}>{children}</onboardingContext.Provider>;

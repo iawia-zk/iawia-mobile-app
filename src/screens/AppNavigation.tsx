@@ -42,6 +42,10 @@ function AppNavigation() {
   const { themeDispatch } = useThemeContext();
   const [isInitialized, setIsInitialized] = useState(false);
 
+  if (typeof Buffer === 'undefined') {
+    global.Buffer = require('buffer').Buffer;
+  }
+
   useEffect(() => {
     handleAppInitFlow();
   }, []);

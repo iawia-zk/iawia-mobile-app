@@ -1,17 +1,21 @@
 import { create } from 'zustand';
 
-interface UserState {
+interface UserInfo {
   passportNumber: string;
   dateOfBirth: string;
   dateOfExpiry: string;
+  nationality: string;
+  issuingCountry: string;
   update: (patch: any) => void;
   deleteMrzFields: () => void;
 }
 
-const useUserInfo = create<UserState>((set, get) => ({
+const useUserInfoStore = create<UserInfo>((set, get) => ({
   passportNumber: '',
   dateOfBirth: '',
   dateOfExpiry: '',
+  nationality: '',
+  issuingCountry: '',
 
   update: (patch) => {
     set({
@@ -25,7 +29,9 @@ const useUserInfo = create<UserState>((set, get) => ({
       passportNumber: '',
       dateOfBirth: '',
       dateOfExpiry: '',
+      nationality: '',
+      issuingCountry: '',
     }),
 }));
 
-export default useUserInfo;
+export default useUserInfoStore;

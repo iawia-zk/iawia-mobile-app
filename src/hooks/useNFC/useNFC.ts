@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
 import PassportReader from 'react-native-passport-reader';
-import Config from 'react-native-config';
-import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 
-import DataSource from 'enums/DataSource';
 import { mockData } from 'constants/mockData';
 
-import { PassportData } from './useNFC.types';
-import useUserInfo from 'stores/userInfoStore';
+import { PassportData } from 'types/passportData';
 import { NativeModules, Platform } from 'react-native';
 
 interface Inputs {

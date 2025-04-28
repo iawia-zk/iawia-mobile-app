@@ -9,7 +9,6 @@ export async function loadPassportData() {
   const passportDataCreds = await Keychain.getGenericPassword({
     service: 'passportData',
   });
-  console.log('passportDataCreds', passportDataCreds);
   return passportDataCreds === false ? false : passportDataCreds.password;
 }
 
@@ -26,8 +25,6 @@ export async function loadPassportDataAndSecret() {
 }
 
 export async function storePassportData(passportData: PassportData) {
-  console.log('Storing passport data in keychain');
-  console.log('passportData', passportData);
   await Keychain.setGenericPassword('passportData', JSON.stringify(passportData), {
     service: 'passportData',
   });
