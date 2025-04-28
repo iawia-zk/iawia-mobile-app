@@ -15,10 +15,10 @@ import spacing from 'theme/spacing';
 
 import { TTabBarIconParams } from './BottomTabBarNavigator.types';
 import { TAB_BAR_HEIGHT } from './BottomTabBarNavigator.constants';
-import Wallet from 'screens/home/Wallet';
 import History from 'screens/home/History';
 import ZeroKnowledgeProof from 'screens/home/ZeroKnowledgeProof';
 import { IdIcon, User01Icon, WalletIcon } from 'components/Icons';
+import Wallet from 'screens/home/Wallet';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,6 +34,7 @@ function BottomTabBarNavigator() {
         headerShown: false,
         tabBarStyle: {
           position: 'absolute',
+          backgroundColor: colors.backgroundPrimary,
           borderTopColor: colors.borderDivider,
           height: TAB_BAR_HEIGHT + bottomInset,
           paddingTop: bottomInset > 0 ? spacing.xs : spacing.none,

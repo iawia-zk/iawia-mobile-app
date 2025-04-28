@@ -13,14 +13,14 @@ export type TAvatarBadgeProps = Omit<TAvatarBaseProps, 'label' | 'children'>;
 export type TAvatarImageProps = {
   size: number;
   borderRadius: number;
-  uri: string;
+  uri: ImageProps['source'];
   onSetImageLoadedError: (hasError: boolean) => void;
   resizeMode?: ImageProps['resizeMode'];
 };
 export type TAvatarBaseProps = {
   label?: string;
   labelColor?: keyof TThemePrimitives;
-  imageUrl?: string;
+  imageUrl?: ImageProps['source'];
   icon?: FC<TIconBaseProps>;
   iconVectorEffect?: VectorEffect;
   iconStrokeWidth?: number;

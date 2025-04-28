@@ -34,9 +34,7 @@ function AvatarImage({
           borderColor: colors.borderOutline,
         }}
         resizeMode={resizeMode}
-        source={{
-          uri,
-        }}
+        source={uri}
         onLoadEnd={() => setImageLoading(false)}
         onError={() => onSetImageLoadedError(true)}
       />

@@ -36,5 +36,20 @@
   "button.startTransaction": "Start Transaction",
   "label.history": "History",
   "label.wallet": "Wallet",
-  "label.zkProof": "Proofs"
+  "label.zkProof": "Proofs",
+  "button.createWallet": "Create Wallet",
+  "screens.onboardingResult.phraseTitle": "We will get ready your privacy!",
+  "screens.onboardingResult.phase1": "Save your wallet phrase and never share it with anyone.",
+  "screens.onboardingResult.phase2": "Import some ether to your wallet in order to initialize zk.",
+  "screens.onboardingResult.phase3": "Create data commitments!",
+  "label.formattedBalance": "{{balance}} eth",
+  "label.tokens": "Tokens",
+  "label.activity": "Activity",
+  "label.initialBanner": "Generate your commitments",
+  "label.initialBannerDescription": "You need to send an initial transaction of 0.0001eth to store your commitments",
+  "button.generateCommitments": "Generate Commitments",
+  "label.export.toExtension": "Export to Extension",
+  "label.export.toExtension.description": "Generates encrypted data for your wallet",
+  "label.export.phrase": "Export Phrase",
+  "label.export.phrase.description": "Requires you to scan your passport"
 }
