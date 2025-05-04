@@ -9,7 +9,7 @@ OUTPUT_DIR="build/${CIRCUIT_TYPE}"
 # Define circuits and their configurations
 # format: name:poweroftau:build_flag
 CIRCUITS=(
-    "vc_and_disclose:20:true"
+    "vc_and_disclose:21:true"
 )
 
-build_circuits "$CIRCUIT_TYPE" "$OUTPUT_DIR" "${CIRCUITS[@]}" 
+build_circuits "$CIRCUIT_TYPE" "$OUTPUT_DIR" "${CIRCUITS[@]}"

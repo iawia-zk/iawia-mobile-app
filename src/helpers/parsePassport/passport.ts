@@ -33,7 +33,7 @@ export function generateCommitment(
   secret: string,
   attestation_id: string,
   passportData: PassportData
-) {
+) : bigint {
   const passportMetadata = passportData.passportMetadata;
 
   const dg1_packed_hash = packBytesAndPoseidon(formatMrz(passportData.mrz));
@@ -56,7 +56,7 @@ export function generateCommitment(
     dg1_packed_hash,
     eContent_packed_hash,
     dsc_hash,
-  ]).toString();
+  ]);
 }
 
 export function generateNullifier(passportData: PassportData) {

@@ -164,7 +164,6 @@ export function generateCircuitInputsVCandDisclose(
   scope: string,
   selector_dg1: string[],
   selector_older_than: string | number,
-  merkletree: LeanIMT,
   majority: string,
   forbidden_countries_list: string[],
   user_identifier: string
@@ -182,13 +181,6 @@ export function generateCircuitInputsVCandDisclose(
 
   const dsc_tree_leaf = getLeafDscTree(passportData.dsc_parsed, passportData.csca_parsed);
 
-  const commitment = generateCommitment(secret, attestation_id, passportData);
-  const index = findIndexInTree(merkletree, BigInt(commitment));
-  const { siblings, path, leaf_depth } = generateMerkleProof(
-    merkletree,
-    index,
-    COMMITMENT_TREE_DEPTH
-  );
   const formattedMajority = majority.length === 1 ? `0${majority}` : majority;
   const majority_ascii = formattedMajority.split('').map((char) => char.charCodeAt(0));
 
@@ -197,11 +189,6 @@ export function generateCircuitInputsVCandDisclose(
     attestation_id: formatInput(attestation_id),
     dg1: formatInput(formattedMrz),
     eContent_shaBytes_packed_hash: formatInput(eContent_packed_hash),
-    dsc_tree_leaf: formatInput(dsc_tree_leaf),
-    merkle_root: formatInput(merkletree.root),
-    leaf_depth: formatInput(leaf_depth),
-    path: formatInput(path),
-    siblings: formatInput(siblings),
     selector_dg1: formatInput(selector_dg1),
     selector_older_than: formatInput(selector_older_than),
     scope: formatInput(scope),

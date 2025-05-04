@@ -26,6 +26,7 @@ function OnboardingResult({ navigation }: TNavigationProps<'OnboardingResult'>) 
     navigation.navigate('Wallet');
   }
 
+  // TODO: hardcoded name
   return (
     <>
       <ScrollView paddingHorizontal="none">
