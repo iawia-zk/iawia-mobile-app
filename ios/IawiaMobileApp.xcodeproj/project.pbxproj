@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* IawiaMobileAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IawiaMobileAppTests.m */; };
-		0C0E49B3784623E1B147DBEC /* libPods-IawiaMobileApp-IawiaMobileAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE9699B8B6DF4A5F480ACB9 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		457D22B30454359F48980D84 /* libPods-IawiaMobileApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD133D14D344CAF0C44131A7 /* libPods-IawiaMobileApp.a */; };
+		510819237195B97E5776EFBD /* libPods-IawiaMobileApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D6A8D6A7EC48DDA82DE85F /* libPods-IawiaMobileApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9E9511B25A1F43EEB48E0114 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33C9F8B58B0944C8803D55F9 /* Inter-SemiBold.ttf */; };
 		B2EEF66BEBA64781A8C8A257 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E969B67F4042441CAA7F1629 /* Inter-Regular.ttf */; };
+		BE08F6C3087FBB675B49039D /* libPods-IawiaMobileApp-IawiaMobileAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F761F2895F4AE32C6AE5C1A8 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */; };
 		D1BE1A20369DC436A7392F62 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		F996A7E1D7D842A5AA30C05E /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B9B0F4237074439AF44D85E /* Inter-Bold.ttf */; };
 /* End PBXBuildFile section */
@@ -34,6 +34,8 @@
 		00E356EE1AD99517003FC87E /* IawiaMobileAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IawiaMobileAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* IawiaMobileAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IawiaMobileAppTests.m; sourceTree = "<group>"; };
+		06A7647DF6EE6FD57303A153 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		0A4340774F65C02585711190 /* Pods-IawiaMobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp.debug.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* IawiaMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IawiaMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IawiaMobileApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = IawiaMobileApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -41,17 +43,15 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IawiaMobileApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IawiaMobileApp/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = IawiaMobileApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2066890DCC83EC279F93AC66 /* Pods-IawiaMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp.release.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp.release.xcconfig"; sourceTree = "<group>"; };
+		2A5EE996CB92765C18CDE9EC /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		33C9F8B58B0944C8803D55F9 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		35D6A8D6A7EC48DDA82DE85F /* libPods-IawiaMobileApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IawiaMobileApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B9B0F4237074439AF44D85E /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		3CE9699B8B6DF4A5F480ACB9 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IawiaMobileApp-IawiaMobileAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = IawiaMobileApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DA046B432F92D89CBEFEE7AB /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DB41ECF82846235CF9FA3542 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		DCB9672E5B21DFDBDB8F4B22 /* Pods-IawiaMobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp.debug.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp.debug.xcconfig"; sourceTree = "<group>"; };
-		DD133D14D344CAF0C44131A7 /* libPods-IawiaMobileApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IawiaMobileApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E969B67F4042441CAA7F1629 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F23841AC711A0E5A9A714603 /* Pods-IawiaMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IawiaMobileApp.release.xcconfig"; path = "Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp.release.xcconfig"; sourceTree = "<group>"; };
+		F761F2895F4AE32C6AE5C1A8 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IawiaMobileApp-IawiaMobileAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C0E49B3784623E1B147DBEC /* libPods-IawiaMobileApp-IawiaMobileAppTests.a in Frameworks */,
+				BE08F6C3087FBB675B49039D /* libPods-IawiaMobileApp-IawiaMobileAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				457D22B30454359F48980D84 /* libPods-IawiaMobileApp.a in Frameworks */,
+				510819237195B97E5776EFBD /* libPods-IawiaMobileApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,8 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DD133D14D344CAF0C44131A7 /* libPods-IawiaMobileApp.a */,
-				3CE9699B8B6DF4A5F480ACB9 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */,
+				35D6A8D6A7EC48DDA82DE85F /* libPods-IawiaMobileApp.a */,
+				F761F2895F4AE32C6AE5C1A8 /* libPods-IawiaMobileApp-IawiaMobileAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,10 +161,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DCB9672E5B21DFDBDB8F4B22 /* Pods-IawiaMobileApp.debug.xcconfig */,
-				F23841AC711A0E5A9A714603 /* Pods-IawiaMobileApp.release.xcconfig */,
-				DA046B432F92D89CBEFEE7AB /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */,
-				DB41ECF82846235CF9FA3542 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */,
+				0A4340774F65C02585711190 /* Pods-IawiaMobileApp.debug.xcconfig */,
+				2066890DCC83EC279F93AC66 /* Pods-IawiaMobileApp.release.xcconfig */,
+				2A5EE996CB92765C18CDE9EC /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */,
+				06A7647DF6EE6FD57303A153 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -176,12 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "IawiaMobileAppTests" */;
 			buildPhases = (
-				3F78AB5124423D37B12EEA33 /* [CP] Check Pods Manifest.lock */,
+				B57622FB2D2A5100345A9C0C /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				864B4B5F3D5293BE987F7A7A /* [CP] Embed Pods Frameworks */,
-				199F79C0283FD3E49EB398DC /* [CP] Copy Pods Resources */,
+				6F9D8ECD6CE68E5DEC62F586 /* [CP] Embed Pods Frameworks */,
+				BC76250C6640A36D9AB24424 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -197,13 +197,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "IawiaMobileApp" */;
 			buildPhases = (
-				8D3F251C04AAD5018634138D /* [CP] Check Pods Manifest.lock */,
+				42CBB2622913104FFE77D443 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				028CFB0B27924C646C08B75B /* [CP] Embed Pods Frameworks */,
-				24E2F573664CF70A3952E187 /* [CP] Copy Pods Resources */,
+				E305732C589474B2C80B2176 /* [CP] Embed Pods Frameworks */,
+				27BA6C5DDA2FE2F62D90A48E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -290,41 +290,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		028CFB0B27924C646C08B75B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		199F79C0283FD3E49EB398DC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		24E2F573664CF70A3952E187 /* [CP] Copy Pods Resources */ = {
+		27BA6C5DDA2FE2F62D90A48E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -341,7 +307,46 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3F78AB5124423D37B12EEA33 /* [CP] Check Pods Manifest.lock */ = {
+		42CBB2622913104FFE77D443 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IawiaMobileApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F9D8ECD6CE68E5DEC62F586 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B57622FB2D2A5100345A9C0C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -363,43 +368,38 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		864B4B5F3D5293BE987F7A7A /* [CP] Embed Pods Frameworks */ = {
+		BC76250C6640A36D9AB24424 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E305732C589474B2C80B2176 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp-IawiaMobileAppTests/Pods-IawiaMobileApp-IawiaMobileAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8D3F251C04AAD5018634138D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IawiaMobileApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IawiaMobileApp/Pods-IawiaMobileApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -435,7 +435,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA046B432F92D89CBEFEE7AB /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */;
+			baseConfigurationReference = 2A5EE996CB92765C18CDE9EC /* Pods-IawiaMobileApp-IawiaMobileAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -462,7 +462,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB41ECF82846235CF9FA3542 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */;
+			baseConfigurationReference = 06A7647DF6EE6FD57303A153 /* Pods-IawiaMobileApp-IawiaMobileAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -486,7 +486,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCB9672E5B21DFDBDB8F4B22 /* Pods-IawiaMobileApp.debug.xcconfig */;
+			baseConfigurationReference = 0A4340774F65C02585711190 /* Pods-IawiaMobileApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -514,7 +514,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F23841AC711A0E5A9A714603 /* Pods-IawiaMobileApp.release.xcconfig */;
+			baseConfigurationReference = 2066890DCC83EC279F93AC66 /* Pods-IawiaMobileApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

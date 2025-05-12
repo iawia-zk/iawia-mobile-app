@@ -23,9 +23,7 @@ function WalletCard() {
       borderRadius={32}
       backgroundColor="appLogoBackgroundDark">
       <Box px="s">
-        <Text variant="textBodyBold" color="textPassive">
-          Serhat Merak
-        </Text>
+        <Text variant="textBodyBold" color="textPassive" />
       </Box>
       <ListItemBase
         left={<Avatar imageUrl={IMAGES.ethLogo} backgroundColor="textPassive" size="small" />}
