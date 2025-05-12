@@ -93,6 +93,11 @@ const ZeroKnowledgeProof = () => {
         <Text variant="titleSubsection" color="textPrimary">
           Your commitments
         </Text>
+        <>
+          <Text variant="textBodyBold" color="textSecondary">
+            No commitments found.
+          </Text>
+        </>
         {/* <Card p={'m'} gap={'s'} mb={'xxl'}>
           {!walletState.walletData || walletState.walletData?.snarks.length === 0 ? (
             <>
